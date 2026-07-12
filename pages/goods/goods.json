@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "商品点单",
+  "usingComponents": {
+    "ai-float-ball": "../../components/ai-float-ball/ai-float-ball"
+  }
+}

@@ -1,0 +1,175 @@
+<view class="top-bar">
+  <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+  <view class="nav-bar">
+    <text class="nav-back" bindtap="goBack">‹</text>
+    <text class="nav-title">商品点单</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 自提模式：店铺信息 -->
+  <view wx:if="{{deliveryType == 'pickup'}}" class="shop-info-bar">
+    <view class="shop-info-top">
+      <view class="shop-info-left">
+        <text class="shop-logo">⭐</text>
+        <text class="shop-info-name">Cocount&coffee</text>
+        <text class="shop-info-arrow">></text>
+      </view>
+      <view class="tab-switch">
+        <text class="tab-item {{deliveryType == 'pickup' ? 'active' : ''}}" bindtap="switchDelivery" data-type="pickup">自提</text>
+        <text class="tab-item {{deliveryType == 'send' ? 'active' : ''}}" bindtap="switchDelivery" data-type="send">外卖</text>
+      </view>
+    </view>
+    <view class="shop-info-distance">距离您0.2km</view>
+    <view class="shop-info-notice">
+      <text class="notice-icon">💡</text>
+      <text class="notice-text">商家暂无公告</text>
+      <image class="search-icon" src="/pages/goods/static/images/search.png" mode="aspectFit" bindtap="openSearch"></image>
+    </view>
+  </view>
+
+<!-- 外卖模式：地址选择和配送方式 -->
+<view wx:if="{{deliveryType == 'send'}}" class="tab-switch-bar">
+  <view class="addr-box" bindtap="selectAddr">
+    <image src="/pages/checkout/static/images/dingwie.png" class="addr-icon" mode="aspectFit"></image>
+    <text class="addr-text">{{selectedAddress ? (selectedAddress.full_address || (selectedAddress.province + selectedAddress.city + selectedAddress.district + selectedAddress.detail)) : '请选择配送地址'}}</text>
+    <text class="arrow">></text>
+  </view>
+  <view class="tabs">
+    <text class="tab-item {{deliveryType == 'pickup' ? 'active' : ''}}" bindtap="switchDelivery" data-type="pickup">自提</text>
+    <text class="tab-item {{deliveryType == 'send' ? 'active' : ''}}" bindtap="switchDelivery" data-type="send">外卖</text>
+  </view>
+</view>
+</view>
+
+<!-- 外卖配送信息 -->
+<view wx:if="{{deliveryType == 'send'}}" class="delivery-info">
+  <view class="time-box">
+    <text>预计30分钟送达</text>
+  </view>
+  <view class="tip-bar">
+    <text>外卖配送费 ¥3 | 满30免配送费</text>
+  </view>
+</view>
+
+<!-- 商家推荐标题 -->
+<view class="recommend-title">商家推荐</view>
+
+<!-- 商家推荐横向滚动 -->
+<scroll-view scroll-x class="recommend-scroll">
+  <view class="recommend-wrap">
+    <view class="recommend-item" wx:for="{{recommendList}}" wx:key="id">
+      <image src="{{item.img}}" mode="aspectFill"></image>
+      <text class="goods-name">{{item.name}}</text>
+      <view class="price-row">
+        <text class="price">¥{{item.price}}</text>
+        <button class="select-btn" bindtap="addCart" data-id="{{item.id}}" data-item="{{item}}">选择</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 左右分栏主体 -->
+<view class="main-box">
+  <!-- 左侧分类 -->
+  <scroll-view scroll-y class="left-cate">
+    <view 
+      class="cate-item {{activeCate == index ? 'active' : ''}}"
+      wx:for="{{cateList}}"
+      wx:key="id"
+      bindtap="switchCate"
+      data-index="{{index}}"
+    >
+      {{item.name}}
+    </view>
+  </scroll-view>
+
+  <!-- 右侧商品列表 -->
+  <scroll-view scroll-y class="right-goods" style="height: 986rpx; display: block; box-sizing: border-box">
+    <view class="goods-item" wx:for="{{currentGoods}}" wx:key="id" style="height: 180rpx; display: flex; box-sizing: border-box">
+      <image src="{{item.img}}" mode="aspectFill"></image>
+      <view class="goods-info">
+        <text class="g-name">{{item.name}}</text>
+        <text class="g-sales" style="height: -214rpx; display: block; box-sizing: content-box">销量{{item.sales}}</text>
+        <view class="g-bottom">
+          <text class="g-price">¥{{item.price}}</text>
+          <button class="g-select" bindtap="addCart" data-id="{{item.id}}" data-item="{{item}}" style="position: relative; left: 54rpx; top: -6rpx">选择</button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 底部购物车栏（和外卖截图完全一致） -->
+<view class="cart-bottom" style="height: 178rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 1447rpx; position: fixed">
+  <view class="cart-icon-wrap" bindtap="openCartPopup">
+    <text class="cart-icon">🛒</text>
+    <text wx:if="{{cartTotal > 0}}" class="cart-badge">{{cartTotal}}</text>
+  </view>
+  <view class="cart-total-text">
+    合计：¥{{totalPrice}}
+  </view>
+  <button class="cart-pay-btn" bindtap="submitOrder">去结算</button>
+</view>
+
+<!-- 购物车弹窗 -->
+<view wx:if="{{showCartPopup}}" class="cart-mask" bindtap="closeCartPopup" catchtouchmove="true">
+  <view class="cart-popup" catchtap="">
+    <view class="popup-header">
+      <text>购物车商品</text>
+      <text class="clear-btn" catchtap="clearCart">清空</text>
+    </view>
+    <scroll-view class="popup-goods-list">
+      <view class="cart-goods-item" wx:for="{{cartList}}" wx:key="id">
+        <image src="{{item.img}}" mode="aspectFill"></image>
+        <view class="goods-text">
+          <text class="cart-name">{{item.name}}</text>
+          <text class="cart-price {{item.isFree ? 'free' : ''}}">{{item.isFree ? '免费' : '¥' + item.price}}</text>
+        </view>
+        <view class="num-control">
+          <button class="minus" catchtap="reduceCart" data-id="{{item.id}}">-</button>
+          <text class="num">{{item.num}}</text>
+          <button class="plus {{item.isFree ? 'disabled' : ''}}" catchtap="addCart" data-item="{{item}}">+</button>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="popup-bottom">
+      <text>合计：<text class="total-money">¥{{totalPrice}}</text></text>
+      <button class="popup-submit" bindtap="submitOrder">去结算</button>
+    </view>
+  </view>
+</view>
+
+<!-- 搜索弹窗 -->
+<view wx:if="{{showSearch}}" class="search-mask" catchtouchmove="true">
+  <view class="search-popup">
+    <view class="search-nav">
+      <text class="search-nav-back" catchtap="closeSearch">‹</text>
+      <text class="search-nav-title">搜索商品</text>
+      <text class="search-nav-right"></text>
+    </view>
+    <view class="search-input-area">
+      <view class="search-input-wrap">
+        <image class="search-icon-small" src="/pages/goods/static/images/search.png" mode="aspectFit"></image>
+        <input class="search-input" placeholder="输入商品名称搜索" value="{{searchText}}" bindinput="onSearchInput" focus="{{showSearch}}"></input>
+        <text wx:if="{{searchText}}" class="search-clear" catchtap="clearSearch">×</text>
+      </view>
+    </view>
+    <scroll-view class="search-result" scroll-y>
+      <view wx:if="{{searchResult.length > 0}}" class="search-list">
+        <view class="search-item" wx:for="{{searchResult}}" wx:key="id" catchtap="selectSearchItem" data-item="{{item}}">
+          <image src="{{item.img}}" mode="aspectFill"></image>
+          <view class="search-info">
+            <text class="search-name">{{item.name}}</text>
+            <text class="search-price">¥{{item.price}}</text>
+          </view>
+          <button class="search-select" catchtap="addCartFromSearch" data-item="{{item}}">选择</button>
+        </view>
+      </view>
+      <view wx:else class="search-empty">
+        <text>未找到相关商品</text>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+
+<ai-float-ball />

@@ -1,0 +1,179 @@
+<view class="page">
+  <view class="header">
+    <text class="back" bindtap="goBack">‹</text>
+    <text class="share">↗</text>
+  </view>
+
+  <view class="img-wrap">
+    <image src="{{goods.img}}" class="goods-main-img" mode="aspectFill"></image>
+    <view class="img-tags">
+      <view class="img-tag green">全球销量NO.1</view>
+      <view class="img-tag green">Coco专属</view>
+    </view>
+    <view class="brand-badge">
+      <text class="badge-text">Coco首创</text>
+    </view>
+  </view>
+
+  <view class="goods-info">
+    <view class="info-top">
+      <text class="goods-name">{{goods.name}}</text>
+      <view class="save-taste" bindtap="saveTaste">
+        <text class="heart-icon">✿</text>
+        <text class="save-text">保存口味</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section-title">杯型</text>
+    <view class="option-row">
+      <view 
+        class="option-item {{selectedSize === 'large' ? 'active' : ''}}" 
+        bindtap="selectSize" data-value="large"
+       style="width: 231rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 22rpx; height: 124rpx; position: relative">
+        <text class="option-icon" style="position: relative; left: -29rpx; top: 18rpx">🥤</text>
+        <view class="option-text-wrap">
+          <text class="option-name" style="position: relative; left: 62rpx; top: -43rpx">大杯</text>
+          <text class="option-desc" style="position: relative; left: 62rpx; top: -47rpx">约450ml</text>
+        </view>
+      </view>
+      <view 
+        class="option-item {{selectedSize === 'xlarge' ? 'active' : ''}}" 
+        bindtap="selectSize" data-value="xlarge"
+       style="width: 398rpx; display: flex; box-sizing: border-box; left: 18rpx; top: 22rpx; height: 120rpx; position: relative">
+        <view class="option-top-tag" style="position: absolute; left: 298rpx; top: -2rpx; width: 196rpx; display: block; box-sizing: border-box">限量联名杯·款式随机</view>
+        <text class="option-icon" style="width: 43rpx; display: block; box-sizing: border-box; position: relative; left: 0rpx; top: 16rpx">🥤</text>
+        <view class="option-text-wrap">
+          <text class="option-name" style="position: relative; left: 74rpx; top: -39rpx">超大杯 + ¥3</text>
+          <text class="option-desc" style="position: relative; left: 74rpx; top: -43rpx">约596ml</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section">
+    <text class="section-title">温度</text>
+    <view class="option-row">
+      <view 
+        class="option-item simple {{selectedTemp === 'ice' ? 'active' : ''}}" 
+        bindtap="selectTemp" data-value="ice"
+       style="width: 138rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 22rpx; position: relative">
+        冰
+      </view>
+      <view 
+        class="option-item simple {{selectedTemp === 'hot' ? 'active' : ''}}" 
+        bindtap="selectTemp" data-value="hot"
+       style="width: 134rpx; display: flex; box-sizing: border-box; left: 4rpx; top: 22rpx; position: relative">
+        热
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{goods.category !== '果茶'}}">
+    <text class="section-title">咖啡豆</text>
+    <view class="option-row three-col">
+      <view 
+        class="option-item bean {{selectedBean === 'italian' ? 'active' : ''}}" 
+        bindtap="selectBean" data-value="italian"
+       style="width: 272rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 19rpx; position: relative">
+        <text class="bean-tag blue">IIAC金奖</text>
+        <text class="bean-name">意式拼配</text>
+        <text class="bean-desc">坚果基调 香醇口感</text>
+      </view>
+      <view 
+        class="option-item bean {{selectedBean === 'deep' ? 'active' : ''}}" 
+        bindtap="selectBean" data-value="deep"
+       style="position: relative; left: 18rpx; top: 19rpx">
+        <text class="bean-tag dark">咖啡更浓</text>
+        <text class="bean-name">深烘拼配</text>
+        <text class="bean-desc">黑巧尾韵 浓郁口感</text>
+      </view>
+      <view 
+        class="option-item bean {{selectedBean === 'ethiopia' ? 'active' : ''}}" 
+        bindtap="selectBean" data-value="ethiopia"
+       style="position: relative; left: 0rpx; top: 20rpx">
+        <text class="bean-tag gold">IIAC铂金</text>
+        <text class="bean-name">埃塞金烘</text>
+        <text class="bean-desc">花香可可 浓郁口感</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{goods.category !== '果茶'}}">
+    <text class="section-title">咖啡浓度</text>
+    <view class="option-row">
+      <view 
+        class="option-item simple {{selectedConcentration === 'normal' ? 'active' : ''}}" 
+        bindtap="selectConcentration" data-value="normal"
+       style="position: relative; left: 0rpx; top: 22rpx; width: 228rpx; display: flex; box-sizing: border-box">
+        默认浓度
+      </view>
+      <view 
+        class="option-item simple {{selectedConcentration === 'extra' ? 'active' : ''}}" 
+        bindtap="selectConcentration" data-value="extra"
+       style="position: relative; left: 12rpx; top: 22rpx; width: 320rpx; display: flex; box-sizing: border-box">
+        加单份浓缩 + ¥3
+      </view>
+    </view>
+  </view>
+
+  <view class="section" style="height: 390rpx; display: block; box-sizing: border-box">
+    <text class="section-title">糖度</text>
+    <view class="option-row">
+      <view 
+        class="option-item simple {{selectedSugar === 'standard' ? 'active' : ''}}" 
+        bindtap="selectSugar" data-value="standard"
+       style="position: relative; left: 0rpx; top: 24rpx; width: 214rpx; display: flex; box-sizing: border-box">
+        标准甜
+      </view>
+      <view 
+        class="option-item simple {{selectedSugar === 'less' ? 'active' : ''}}" 
+        bindtap="selectSugar" data-value="less"
+       style="position: relative; left: 20rpx; top: 24rpx; width: 180rpx; display: flex; box-sizing: border-box">
+        少甜
+      </view>
+      <view 
+        class="option-item simple {{selectedSugar === 'lesser' ? 'active' : ''}}" 
+        bindtap="selectSugar" data-value="lesser"
+       style="position: relative; left: 32rpx; top: 24rpx; width: 212rpx; display: flex; box-sizing: border-box">
+        少少甜
+      </view>
+    </view>
+    <view class="option-row">
+      <view 
+        class="option-item simple {{selectedSugar === 'micro' ? 'active' : ''}}" 
+        bindtap="selectSugar" data-value="micro"
+       style="position: relative; left: 0rpx; top: 46rpx; width: 166rpx; display: flex; box-sizing: border-box">
+        微甜
+      </view>
+      <view 
+        class="option-item simple {{selectedSugar === 'none' ? 'active' : ''}}" 
+        bindtap="selectSugar" data-value="none"
+       style="position: relative; left: 50rpx; top: 46rpx">
+        不另外加糖
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar" style="position: fixed; left: 0rpx; top: 1364rpx; height: 466rpx; display: flex; box-sizing: border-box">
+    <view class="price-row" style="height: 64rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 0rpx">
+      <view class="price-area">
+        <text class="price-symbol">¥</text>
+        <text class="price">{{finalPrice}}</text>
+        <text class="price-desc">预估到手</text>
+        <text class="price-original">¥{{goods.price}}</text>
+      </view>
+      <view class="num-control">
+        <button class="num-btn minus-btn" bindtap="minus" style="position: relative; left: 0rpx; top: 20rpx; width: 48rpx; display: block; box-sizing: border-box">-</button>
+        <text class="num" style="position: relative; left: 0rpx; top: 20rpx; width: 44rpx; display: block; box-sizing: border-box">{{quantity}}</text>
+        <button class="num-btn plus-btn" bindtap="plus" style="position: relative; left: 0rpx; top: 21rpx">+</button>
+      </view>
+    </view>
+    <text class="spec-desc">{{goods.name}}·{{selectedSize === 'large' ? '大杯' : '超大杯'}}·{{selectedTemp === 'ice' ? '冰' : '热'}}·{{getBeanName(selectedBean)}}·{{getConcentrationName(selectedConcentration)}}·{{getSugarName(selectedSugar)}}·青椰¥0</text>
+    <view class="btn-row">
+      <button class="add-cart-btn" bindtap="addToCart" style="width: 296rpx; height: 113rpx; display: block; box-sizing: border-box; left: 0rpx; top: -13rpx; position: relative">加入购物车</button>
+      <button class="buy-now-btn" bindtap="buyNow" style="position: relative; left: 1rpx; top: -12rpx; width: 358rpx; height: 113rpx; display: block; box-sizing: border-box">立即购买</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "ai-float-ball": "../../components/ai-float-ball/ai-float-ball"
+  }
+}

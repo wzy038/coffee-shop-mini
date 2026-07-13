@@ -1,0 +1,203 @@
+<view class="page">
+  <view class="top-bar">
+    <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+    <view class="nav-bar">
+      <text class="nav-back" bindtap="goBack">‹</text>
+      <text class="nav-title">确认订单</text>
+      <view class="nav-right"></view>
+    </view>
+    
+    <view wx:if="{{showDeliveryToggle}}" class="tab-wrap">
+      <view class="tab-item {{deliveryType == 'pickup' ? 'active' : ''}}" bindtap="switchTab" data-type="pickup">自提</view>
+      <view class="tab-item {{deliveryType == 'send' ? 'active' : ''}}" bindtap="switchTab" data-type="send">外送</view>
+    </view>
+  </view>
+
+  <view wx:if="{{deliveryType == 'pickup'}}" class="shop-card">
+    <view class="card-tag">距离最近</view>
+    <view class="card-title-row">
+      <text class="card-title">闽南科技学院康美校区店</text>
+      <text class="card-arrow">></text>
+    </view>
+    <view class="card-sub">南安市康美镇康元路18号闽南科技学院第三食堂2层</view>
+    <view class="card-footer">
+      <text class="card-time">预计19:37可取餐</text>
+      <text class="card-dist">距您149m</text>
+    </view>
+  </view>
+
+  <view wx:if="{{deliveryType == 'send'}}" class="address-card" bindtap="goAddress">
+    <view class="card-tag">{{selectedAddress.tag || '学校'}}</view>
+    <view class="card-title-row">
+      <text class="card-title">{{selectedAddress.detail || '请选择收货地址'}}</text>
+      <text class="card-arrow">></text>
+    </view>
+    <view class="card-sub">{{selectedAddress.name}} {{selectedAddress.phone}}</view>
+    <view class="card-footer">
+      <text class="card-time">预计16:35可送达</text>
+      <text class="card-dist">当前地址距您0.2km</text>
+    </view>
+  </view>
+
+  <view class="goods-card">
+    <view wx:if="{{cartList.length > 0}}" wx:for="{{cartList}}" wx:key="id" class="goods-item">
+      <image src="{{item.img}}" class="goods-img"></image>
+      <view class="goods-main">
+        <text class="goods-name">{{item.name}}</text>
+        <text class="spec">{{item.spec}}</text>
+        <view wx:if="{{item.upgrade}}" class="upgrade-line">
+          <text class="upgrade-text">{{item.upgrade}}</text>
+          <button class="upgrade-btn">升杯</button>
+        </view>
+      </view>
+      <view class="price-col">
+        <text class="goods-price {{item.isFree ? 'free' : ''}}">{{item.isFree ? '¥0' : '¥' + item.price}}</text>
+        <view class="num-wrap">
+          <button class="num-btn minus {{item.isFree ? 'disabled' : ''}}" bindtap="changeNum" data-id="{{item.id}}" data-op="-">-</button>
+          <text class="num">{{item.num}}</text>
+          <button class="num-btn plus {{item.isFree ? 'disabled' : ''}}" bindtap="changeNum" data-id="{{item.id}}" data-op="+">+</button>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{cartList.length === 0}}" class="empty-cart">
+      <text>购物车为空</text>
+    </view>
+  </view>
+
+  <view wx:if="{{deliveryType == 'send'}}" class="fee-card">
+    <view class="fee-row">
+      <text>打包费(免打包费)</text>
+      <text>¥0</text>
+    </view>
+    <view class="fee-row">
+      <text>配送费(配送费¥6，满30元免配送费)</text>
+      <text>¥{{sendFee}}</text>
+    </view>
+  </view>
+
+  <view class="exchange-box">
+    <view class="exchange-title">
+      超值换购
+      <text class="exchange-tip">近期有347人换购</text>
+    </view>
+    <scroll-view scroll-x class="exchange-scroll">
+      <view class="exchange-row">
+        <view wx:for="{{exchangeList}}" wx:key="id" class="exchange-item">
+          <image src="{{item.img}}" class="ex-img" mode="aspectFill"></image>
+          <text class="ex-name">{{item.name}}</text>
+          <view class="ex-price-wrap">
+            <text class="ex-now-price">¥{{item.price}}</text>
+            <button class="ex-add" bindtap="addExchange" data-id="{{item.id}}" data-name="{{item.name}}" data-price="{{item.price}}" data-img="{{item.img}}">+</button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <view class="pay-total-box">
+    <view class="pay-total-left">
+      <text>商品合计</text>
+      <text>¥{{goodsSum}}</text>
+    </view>
+    <view class="pay-total-right">
+      <text>支付金额</text>
+      <text class="pay-total-money">¥{{payTotal}}</text>
+    </view>
+  </view>
+
+  <view class="coupon-box" bindtap="openCouponModal">
+    <view class="coupon-left">
+      <text>优惠券</text>
+      <text wx:if="{{selectedCoupon}}" class="coupon-discount">-¥{{selectedCoupon.discount}}</text>
+      <text wx:if="{{!selectedCoupon && coupons.length > 0}}" class="coupon-count">{{coupons.length}}张可用</text>
+      <text wx:if="{{!selectedCoupon && coupons.length === 0}}" class="coupon-none">暂无可用</text>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="payment-box">
+    <text>支付方式</text>
+    <view class="payment-list">
+      <view class="payment-item {{payType == 'balance' ? 'active' : ''}}" bindtap="selectPayType" data-type="balance">
+        <text>余额支付</text>
+        <text class="check">{{payType == 'balance' ? '✓' : ''}}</text>
+      </view>
+      <view class="payment-item {{payType == 'wechat' ? 'active' : ''}}" bindtap="selectPayType" data-type="wechat">
+        <text>微信支付</text>
+        <text class="check">{{payType == 'wechat' ? '✓' : ''}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="remark-box" bindtap="goRemark">
+    <view class="remark-left">
+      <text>备注特殊要求</text>
+      <text wx:if="{{remark}}" class="remark-text">{{remark}}</text>
+    </view>
+    <text class="arrow">></text>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="bottom-left">
+      <view class="bottom-price-wrap">
+        <text class="bottom-label">实付</text>
+        <text class="bottom-money">¥{{payTotal - discountAmount}}</text>
+        <text wx:if="{{discountAmount > 0}}" class="bottom-discount">¥{{payTotal}}</text>
+      </view>
+      <text wx:if="{{deliveryType == 'send' && goodsSum < 30}}" class="bottom-desc">差¥{{30 - goodsSum}}起送</text>
+      <text wx:if="{{deliveryType == 'pickup'}}" class="bottom-desc">现在下单取餐快</text>
+    </view>
+    <button class="submit-order-btn" bindtap="submitOrder">提交订单</button>
+  </view>
+
+  <view wx:if="{{showRemarkModal}}" class="remark-mask" bindtap="closeRemarkModal">
+    <view class="remark-modal" catchtap="">
+      <view class="remark-modal-header">
+        <text class="remark-modal-title">备注特殊要求</text>
+        <text class="remark-modal-close" bindtap="closeRemarkModal">✕</text>
+      </view>
+      <view class="remark-tags">
+        <view wx:for="{{remarkTags}}" wx:key="*this" class="remark-tag {{remark == item ? 'active' : ''}}" bindtap="selectRemarkTag" data-value="{{item}}">{{item}}</view>
+      </view>
+      <textarea class="remark-input" placeholder="请输入备注信息（100字以内）" maxlength="100" value="{{remark}}" bindinput="onRemarkInput" focus="{{showRemarkModal}}"></textarea>
+      <view class="remark-modal-footer">
+        <button class="remark-cancel-btn" bindtap="closeRemarkModal">取消</button>
+        <button class="remark-confirm-btn" bindtap="confirmRemark">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showCouponModal}}" class="coupon-mask">
+      <view class="coupon-modal">
+        <view class="coupon-modal-header">
+          <text class="coupon-modal-title">选择优惠券</text>
+          <text class="coupon-modal-close" bindtap="closeCouponModal">✕</text>
+        </view>
+        <view class="coupon-modal-body">
+          <view wx:if="{{coupons.length === 0}}" class="coupon-empty">
+            <text class="coupon-empty-icon">🎫</text>
+            <text class="coupon-empty-text">暂无优惠券</text>
+            <text class="coupon-empty-hint">去积分商城兑换吧~</text>
+          </view>
+          <view wx:for="{{coupons}}" wx:key="id" 
+            class="coupon-item {{tempCoupon && tempCoupon.id === item.id ? 'selected' : ''}} {{item.minAmount > goodsSum ? 'disabled' : ''}}"
+            bindtap="selectCoupon" data-coupon="{{item}}">
+            <view class="coupon-left-part">
+              <text class="coupon-discount-num">¥{{item.discount}}</text>
+              <text class="coupon-min-amount">满{{item.minAmount}}可用</text>
+            </view>
+            <view class="coupon-right-part">
+              <text class="coupon-name">{{item.name}}</text>
+              <text class="coupon-time">有效期至{{item.endTime || '长期有效'}}</text>
+            </view>
+            <view class="coupon-check">{{tempCoupon && tempCoupon.id === item.id ? '✓' : ''}}</view>
+          </view>
+        </view>
+        <view class="coupon-modal-footer">
+          <button class="coupon-confirm-btn" bindtap="confirmCoupon">确定</button>
+        </view>
+      </view>
+    </view>
+
+    <ai-float-ball />
+  </view>

@@ -1,0 +1,112 @@
+<view class="page">
+  <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+  <view class="header">
+    <text class="page-title">我的订单</text>
+  </view>
+
+  <view class="order-tabs">
+    <view class="tab-item {{activeTab == 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab-item {{activeTab == 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">待取餐</view>
+    <view class="tab-item {{activeTab == 'done' ? 'active' : ''}}" bindtap="switchTab" data-tab="done">已完成</view>
+  </view>
+
+  <view wx:if="{{orderList.length == 0}}" class="empty-state">
+    <text class="empty-icon">📋</text>
+    <text class="empty-text">暂无订单</text>
+    <button class="go-order-btn" bindtap="goOrder">去下单</button>
+  </view>
+
+  <view wx:for="{{orderList}}" wx:key="id" class="order-card">
+    <view wx:if="{{item.type == 'pickup' && item.status == '待取餐'}}" class="pickup-code-box">
+      <text class="code-status">{{item.orderStatus || '制作中'}}</text>
+      <text class="code-number">{{item.pickupCode}}</text>
+      <text class="code-label">取单号</text>
+      <text class="code-tip">本店为自取餐厅，请您留意叫号屏</text>
+      <button class="refund-btn" bindtap="applyRefund" data-id="{{item.id}}">申请退款</button>
+      <view class="progress-bar pickup-progress">
+        <view class="progress-step {{item.orderStatus == '已下单' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">已下单</text>
+        </view>
+        <view class="progress-line {{item.orderStatus == '制作中' || item.orderStatus == '请取餐' ? 'active' : ''}}"></view>
+        <view class="progress-step {{item.orderStatus == '制作中' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">制作中</text>
+        </view>
+        <view class="progress-line {{item.orderStatus == '请取餐' ? 'active' : ''}}"></view>
+        <view class="progress-step {{item.orderStatus == '请取餐' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">请取餐</text>
+        </view>
+      </view>
+      <view class="waiting-info">
+        <text class="waiting-text">前方{{item.waitingCount || 15}}杯制作中，预计等待{{item.waitingTime || '15分钟'}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{item.type == 'send' && item.status == '待取餐'}}" class="send-progress-box">
+      <text class="send-status">{{item.orderStatus || '待配送'}}</text>
+      <view class="waiting-info send-waiting">
+        <text class="waiting-text">前方{{item.waitingCount || 50}}杯制作中，预计{{item.deliveryTime || '15:30'}}送达</text>
+      </view>
+      <view class="progress-bar send-progress">
+        <view class="progress-step {{item.orderStatus == '待接单' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">待接单</text>
+        </view>
+        <view class="progress-line {{item.orderStatus == '待配送' || item.orderStatus == '配送中' || item.orderStatus == '已送达' ? 'active' : ''}}"></view>
+        <view class="progress-step {{item.orderStatus == '待配送' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">待配送</text>
+        </view>
+        <view class="progress-line {{item.orderStatus == '配送中' || item.orderStatus == '已送达' ? 'active' : ''}}"></view>
+        <view class="progress-step {{item.orderStatus == '配送中' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">配送中</text>
+        </view>
+        <view class="progress-line {{item.orderStatus == '已送达' ? 'active' : ''}}"></view>
+        <view class="progress-step {{item.orderStatus == '已送达' ? 'active' : ''}}">
+          <text class="step-icon">✓</text>
+          <text class="step-text">已送达</text>
+        </view>
+      </view>
+      <view class="send-contact">
+        <button class="contact-btn" bindtap="contactShop">联系门店</button>
+        <button class="refund-btn" bindtap="applyRefund" data-id="{{item.id}}">申请退款</button>
+      </view>
+    </view>
+
+    <view class="order-header">
+      <text class="order-id">订单号: {{item.id}}</text>
+      <text class="order-status">{{item.status}}</text>
+    </view>
+    <view class="order-type">
+      <text class="type-icon">{{item.type == 'pickup' ? '自提' : (item.type == 'periphery' ? '周边' : '外送')}}</text>
+      <text class="order-time">{{item.createTime}}</text>
+    </view>
+    <view class="order-items">
+      <view wx:for="{{item.items}}" wx:for-item="good" wx:key="id" class="order-item">
+        <image src="{{good.img}}" class="item-img"></image>
+        <view class="item-info">
+          <text class="item-name">{{good.name}}</text>
+          <text wx:if="{{good.isFree || good.couponType}}" class="item-free-tag">积分兑换</text>
+          <text class="item-spec">{{good.spec || '标准'}}</text>
+        </view>
+        <view class="item-right">
+          <text class="item-price">¥{{good.price}}</text>
+          <text class="item-num">x{{good.num}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{item.remark}}" class="order-remark">
+      <text class="remark-label">备注：</text>
+      <text class="remark-content">{{item.remark}}</text>
+    </view>
+    <view class="order-footer">
+      <text class="total-text">合计: <text class="total-price">¥{{item.total}}</text></text>
+      <button wx:if="{{item.type == 'pickup' && item.status == '待取餐'}}" class="order-btn" bindtap="handleOrder" data-id="{{item.id}}">去取餐</button>
+      <button wx:if="{{item.type == 'send' && item.status == '待取餐'}}" class="order-btn" bindtap="handleOrder" data-id="{{item.id}}">确认送达</button>
+      <button wx:if="{{item.status == '已完成'}}" class="order-btn gray" bindtap="handleOrder" data-id="{{item.id}}">再来一单</button>
+    </view>
+  </view>
+</view>

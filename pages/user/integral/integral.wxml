@@ -1,0 +1,56 @@
+<view class="page">
+  <view class="header">
+    <view class="header-content">
+      <view class="point-card" style="height: 186rpx; display: flex; box-sizing: border-box">
+        <view class="point-info">
+          <text class="point-label">我的积分：</text>
+          <text class="point-value">{{userPoint}}分</text>
+        </view>
+        <view class="exchange-btn">每日签到</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tabs" style="position: relative; left: 0rpx; top: 2rpx">
+    <view class="tab-item {{currentTab === 'dessert' ? 'active' : ''}}" bindtap="switchTab" data-tab="dessert">积分兑甜品</view>
+    <view class="tab-item {{currentTab === 'coupon' ? 'active' : ''}}" bindtap="switchTab" data-tab="coupon">积分兑券</view>
+    <view class="tab-item {{currentTab === 'peripheral' ? 'active' : ''}}" bindtap="switchTab" data-tab="peripheral">积分兑周边</view>
+  </view>
+
+  <view class="goods-section" style="position: relative; left: 0rpx; top: 1rpx">
+    <view class="section-title">{{currentTab === 'dessert' ? '积分兑甜品' : currentTab === 'coupon' ? '积分兑券' : '积分兑周边'}}</view>
+    
+    <view class="goods-grid" wx:if="{{currentTab === 'dessert'}}">
+      <view class="goods-item" wx:for="{{dessertList}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-point">{{item.point}}积分</text>
+        </view>
+        <view class="goods-btn" bindtap="exchangeGoods" data-item="{{item}}">兑换</view>
+      </view>
+    </view>
+
+    <view class="goods-grid" wx:if="{{currentTab === 'coupon'}}">
+      <view class="goods-item" wx:for="{{couponList}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-point">{{item.point}}积分</text>
+        </view>
+        <view class="goods-btn" bindtap="exchangeGoods" data-item="{{item}}">兑换</view>
+      </view>
+    </view>
+
+    <view class="goods-grid" wx:if="{{currentTab === 'peripheral'}}">
+      <view class="goods-item" wx:for="{{peripheralList}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-point">{{item.point}}积分</text>
+        </view>
+        <view class="goods-btn" bindtap="exchangeGoods" data-item="{{item}}">兑换</view>
+      </view>
+    </view>
+  </view>
+</view>

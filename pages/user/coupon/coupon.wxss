@@ -1,0 +1,181 @@
+.page {
+  min-height: 100vh;
+  background: #fdf6e9;
+}
+
+.top-bar {
+  background: #8fb593;
+}
+
+.status-bar-placeholder {
+  background: #8fb593;
+}
+
+.nav-bar {
+  height: 88rpx;
+  background: #8fb593;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30rpx;
+}
+
+.nav-back {
+  font-size: 56rpx;
+  color: #fff;
+  line-height: 1;
+}
+
+.nav-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.nav-right {
+  width: 60rpx;
+}
+
+.tabs {
+  display: flex;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  padding: 10rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 12rpx;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: #8fb593;
+  color: #fff;
+}
+
+.goods-section {
+  padding: 0 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #8fb593;
+}
+
+.goods-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20rpx;
+}
+
+.goods-item {
+  width: calc(50% - 20rpx);
+  background: #fff;
+  margin: 10rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.goods-item.used {
+  opacity: 0.6;
+}
+
+.goods-img {
+  width: 100%;
+  height: 280rpx;
+}
+
+.goods-info {
+  padding: 0 20rpx;
+}
+
+.goods-name {
+  display: block;
+  padding: 20rpx 0 8rpx;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.goods-point {
+  display: block;
+  padding: 0 0 16rpx;
+  font-size: 24rpx;
+  color: #999;
+  text-align: center;
+}
+
+.goods-non-stackable {
+  display: block;
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.goods-used {
+  display: block;
+  font-size: 22rpx;
+  color: #ff6b6b;
+  text-align: center;
+  margin-bottom: 8rpx;
+}
+
+.goods-btn {
+  margin: 0 20rpx 20rpx;
+  background: #8fb593;
+  color: #fff;
+  text-align: center;
+  padding: 14rpx;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+}
+
+.goods-btn.disabled {
+  background: #ccc;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.empty-hint {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+}
+
+.empty-btn {
+  background: #8fb593;
+  color: #fff;
+  padding: 18rpx 48rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}

@@ -1,0 +1,8 @@
+.page {
+  padding: 30rpx;
+}
+.back-btn {
+  padding: 25rpx 30rpx;
+  font-size: 34rpx;
+  color: #333;
+}

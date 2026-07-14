@@ -1,0 +1,116 @@
+<view class="page">
+  <view class="addr-list" wx:if="{{!showForm}}">
+    <view wx:for="{{addressList}}" wx:key="id" class="addr-item">
+      <view class="addr-main" bindtap="selectAddr" data-item="{{item}}">
+        <text class="addr-region">{{item.province}} {{item.city}} {{item.district}}</text>
+        <text class="addr-detail">{{item.detail}}</text>
+        <view class="addr-user">
+          <text class="user-name">{{item.name}}</text>
+          <text class="user-phone">{{item.phone}}</text>
+          <text wx:if="{{item.is_default == 1}}" class="default-tag">默认</text>
+        </view>
+      </view>
+      <view class="addr-edit" catchtap="editAddr" data-item="{{item}}">
+        <text class="edit-icon">✎</text>
+      </view>
+    </view>
+
+    <view wx:if="{{addressList.length > 0}}" class="list-bottom">到底啦</view>
+
+    <view wx:if="{{addressList.length == 0}}" class="empty-state">
+      <image class="empty-icon" src="/pages/user/address/static/images/ditu.png" mode="aspectFit" />
+      <text class="empty-text">暂无收货地址</text>
+    </view>
+  </view>
+
+  <view class="form-wrap" wx:if="{{showForm}}">
+    <view class="form-item">
+      <text class="form-label">联系人</text>
+      <input class="form-input" placeholder="请填写收货人姓名" value="{{formData.name}}" bindinput="inputName" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">性别</text>
+      <view class="gender-wrap">
+        <view class="gender-option {{formData.gender == 'male' ? 'active' : ''}}" bindtap="selectGender" data-value="male">
+          <view class="gender-radio"></view>
+          <text class="gender-text">先生</text>
+        </view>
+        <view class="gender-option {{formData.gender == 'female' ? 'active' : ''}}" bindtap="selectGender" data-value="female">
+          <view class="gender-radio"></view>
+          <text class="gender-text">女士</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">手机号</text>
+      <input class="form-input" placeholder="请填写收货手机号" type="number" value="{{formData.phone}}" bindinput="inputPhone" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">地址</text>
+      <view class="region-wrap" bindtap="showRegionPicker">
+        <text wx:if="{{formData.province}}" class="region-text">{{formData.province}} {{formData.city}} {{formData.district}}</text>
+        <text wx:else class="region-placeholder">点击选择</text>
+        <text class="region-arrow">></text>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">门牌号</text>
+      <input class="form-input" placeholder="例如：B座15楼1206室" value="{{formData.detail}}" bindinput="inputDetail" />
+    </view>
+
+    <view class="form-item">
+      <view class="checkbox-wrap" bindtap="toggleDefault">
+        <view class="checkbox {{formData.is_default ? 'checked' : ''}}"></view>
+        <text class="checkbox-text">设为默认地址</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="add-btn" wx:if="{{!showForm}}" bindtap="addAddr">+ 添加收货地址</view>
+  <button class="save-btn" wx:if="{{showForm}}" bindtap="saveAddr">保存</button>
+
+  <!-- 定位失败黑色弹窗 -->
+  <view wx:if="{{showTip}}" class="mask" bindtap="closeTip">
+    <view class="tip-box" catchtap="">
+      <text class="tip-title">提示</text>
+      <text class="tip-text">无法获取位置，请手动输入地址</text>
+      <view class="tip-btn" bindtap="closeTip">确定</view>
+    </view>
+  </view>
+
+  <!-- 地区选择弹窗 -->
+  <view wx:if="{{showRegionPicker}}" class="region-mask" bindtap="hideRegionPicker">
+    <view class="region-picker" catchtap="stopPropagation">
+      <view class="picker-header">
+        <text class="picker-title">选择地区</text>
+        <text class="picker-cancel" catchtap="hideRegionPicker">取消</text>
+      </view>
+      <view class="picker-content" catchtap="stopPropagation">
+        <picker-view class="picker-view" value="{{pickerValue}}" bindchange="onPickerChange">
+          <picker-view-column>
+            <view wx:for="{{provinces}}" wx:key="name" class="picker-col-item {{selectedProvince == item.name ? 'active' : ''}}">
+              {{item.name}}
+            </view>
+          </picker-view-column>
+          <picker-view-column>
+            <view wx:for="{{cities}}" wx:key="name" class="picker-col-item {{selectedCity == item.name ? 'active' : ''}}">
+              {{item.name}}
+            </view>
+          </picker-view-column>
+          <picker-view-column>
+            <view wx:for="{{districts}}" wx:key="*this" class="picker-col-item {{selectedDistrict == item ? 'active' : ''}}">
+              {{item}}
+            </view>
+          </picker-view-column>
+        </picker-view>
+      </view>
+      <view class="picker-footer">
+        <view class="picker-confirm" catchtap="confirmRegion">确定</view>
+      </view>
+    </view>
+  </view>
+</view>

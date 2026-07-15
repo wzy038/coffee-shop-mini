@@ -9,8 +9,8 @@ from app import create_app
 app = create_app()
 
 if __name__ == "__main__":
-    # 从环境变量读取主机和端口
-    host = os.getenv("HOST", "127.0.0.1")
+    # 从环境变量读取主机和端口，默认监听所有网络接口
+    host = os.getenv("HOST", "0.0.0.0")
     port = int(os.getenv("PORT", 5000))
 
     print("=" * 50)

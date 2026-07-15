@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api'
+const API_BASE = 'http://192.168.63.84:5000/api'
 
 Page({
   data: {
@@ -147,5 +147,33 @@ Page({
     wx.navigateBack({
       delta: 1
     })
+  },
+
+  addProductToCart: function(e) {
+    const rec = e.currentTarget.dataset.rec
+    if (!rec || !rec.product) {
+      wx.showToast({ title: '商品信息错误', icon: 'none' })
+      return
+    }
+
+    const product = rec.product
+    const goods = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      img: product.image,
+      num: 1,
+      spec: `${rec.sweetness || '适中'}/${rec.ice || '少冰'}`
+    }
+
+    let cart = wx.getStorageSync("cart") || []
+    const existIndex = cart.findIndex(item => item.id === goods.id)
+    if (existIndex !== -1) {
+      cart[existIndex].num += goods.num
+    } else {
+      cart.push(goods)
+    }
+    wx.setStorageSync("cart", cart)
+    wx.showToast({ title: "加入购物车成功", icon: "success" })
   }
 })

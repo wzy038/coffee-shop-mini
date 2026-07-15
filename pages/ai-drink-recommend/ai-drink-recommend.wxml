@@ -1,11 +1,4 @@
 <view class="container">
-  <view class="header">
-    <view class="back-btn" bindtap="goBack">
-      <text class="back-icon">←</text>
-    </view>
-    <text class="header-title">AI饮品推荐</text>
-    <view class="header-placeholder"></view>
-  </view>
 
   <scroll-view class="chat-container" scroll-y="true" scroll-into-view="{{scrollToId}}" enhanced show-scrollbar="false">
     <view class="message-list">
@@ -38,15 +31,19 @@
           <view class="ai-bubble">
             <text class="bubble-text">{{item.content}}</text>
             <view wx:if="{{item.recommendations && item.recommendations.length > 0}}" class="recommendation-list">
-              <view wx:for="{{item.recommendations}}" wx:key="product_id" wx:for-item="rec" class="recommendation-card">
+              <view wx:for="{{item.recommendations}}" wx:key="product.id" wx:for-item="rec" class="recommendation-card" bindtap="addProductToCart" data-rec="{{rec}}">
+                <image class="rec-image" src="{{rec.product.image}}" mode="aspectFill" />
                 <view class="rec-info">
-                  <text class="rec-name">{{rec.name}}</text>
-                  <text class="rec-price">¥{{rec.price}}</text>
+                  <text class="rec-name">{{rec.product.name}}</text>
+                  <text class="rec-price">¥{{rec.product.price}}</text>
                   <text class="rec-reason">{{rec.reason}}</text>
                   <view class="rec-tags">
                     <text class="tag">甜度: {{rec.sweetness || '适中'}}</text>
-                    <text class="tag">冰度: {{rec.ice_level || '少冰'}}</text>
+                    <text class="tag">冰度: {{rec.ice || '少冰'}}</text>
                   </view>
+                </view>
+                <view class="rec-add-btn">
+                  <text class="add-btn-text">加入购物车</text>
                 </view>
                 <view wx:if="{{rec.discount}}" class="rec-discount">
                   <text class="discount-text">立省 ¥{{rec.discount}}</text>

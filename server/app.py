@@ -25,6 +25,9 @@ def create_app(config_name=None):
     else:
         app.config.from_object(get_config())
 
+    app.config['JSON_AS_ASCII'] = False
+    app.config['JSONIFY_MIMETYPE'] = 'application/json; charset=utf-8'
+
     # 初始化数据库
     db.init_app(app)
 

@@ -1,0 +1,112 @@
+<view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+<view class="nav-bar">
+  <text class="nav-back" bindtap="goBack">‹</text>
+  <text class="nav-title">外卖点单</text>
+  <view class="nav-right"></view>
+</view>
+
+<!-- 顶部配送信息栏 -->
+<view class="delivery-top">
+  <view class="addr-box" bindtap="selectAddr">
+    <image src="/pages/checkout/static/images/dingwie.png" class="addr-icon" mode="aspectFit"></image>
+    <text class="addr-text">{{selectedAddress ? (selectedAddress.full_address || (selectedAddress.province + selectedAddress.city + selectedAddress.district + selectedAddress.detail)) : '请选择配送地址'}}</text>
+    <text class="arrow">></text>
+  </view>
+  <view class="time-box">
+    <text>预计30分钟送达</text>
+  </view>
+</view>
+
+<!-- 配送费提示 -->
+<view class="tip-bar">
+  <text>外卖配送费 ¥3 | 满30免配送费</text>
+</view>
+
+<!-- 商家推荐标题 -->
+<view class="recommend-title">商家推荐</view>
+
+<!-- 商家推荐横向滚动 -->
+<scroll-view scroll-x class="recommend-scroll">
+  <view class="recommend-wrap">
+    <view class="recommend-item" wx:for="{{recommendList}}" wx:key="id">
+      <image src="{{item.img}}" mode="aspectFill"></image>
+      <text class="goods-name">{{item.name}}</text>
+      <view class="price-row">
+        <text class="price">¥{{item.price}}</text>
+        <button class="select-btn" bindtap="addCart" data-item="{{item}}">选择</button>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 左右分栏商品主体 -->
+<view class="main-box">
+  <!-- 左侧分类 -->
+  <scroll-view scroll-y class="left-cate">
+    <view 
+      class="cate-item {{activeCate == index ? 'active' : ''}}"
+      wx:for="{{cateList}}"
+      wx:key="id"
+      bindtap="switchCate"
+      data-index="{{index}}"
+    >
+      {{item.name}}
+    </view>
+  </scroll-view>
+
+  <!-- 右侧外卖商品列表 -->
+  <scroll-view scroll-y class="right-goods">
+    <view class="goods-item" wx:for="{{currentGoods}}" wx:key="id">
+      <image src="{{item.img}}" mode="aspectFill"></image>
+      <view class="goods-info">
+        <text class="g-name">{{item.name}}</text>
+        <text class="g-sales">销量{{item.sales}}</text>
+        <view class="g-bottom">
+          <text class="g-price">¥{{item.price}}</text>
+          <button class="g-select" bindtap="addCart" data-item="{{item}}">选择</button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 底部结算栏 -->
+<view class="cart-bottom">
+  <view class="cart-icon-wrap" bindtap="openCartPopup">
+    <text class="cart-icon">🛒</text>
+    <text wx:if="{{cartTotal > 0}}" class="cart-badge">{{cartTotal}}</text>
+  </view>
+  <text class="cart-total-text">
+    <text wx:if="{{cartTotal == 0}}">未选商品</text>
+    <text wx:else>合计：¥{{totalPrice}}</text>
+  </text>
+  <button wx:if="{{cartTotal > 0}}" class="cart-pay-btn" bindtap="submitOrder">去结算</button>
+</view>
+
+<!-- 购物车弹窗 彻底修复闪退 -->
+<view wx:if="{{showCartPopup}}" class="cart-mask" bindtap="closeCartPopup">
+  <view class="cart-popup">
+    <view class="popup-header">
+      <text>购物车商品</text>
+      <text class="clear-btn" catchtap="clearCart">清空</text>
+    </view>
+    <scroll-view class="popup-goods-list">
+      <view class="cart-goods-item" wx:for="{{cartList}}" wx:key="id">
+        <image src="{{item.img}}" mode="aspectFill"></image>
+        <view class="goods-text">
+          <text class="cart-name">{{item.name}}</text>
+          <text class="cart-price">¥{{item.price}}</text>
+        </view>
+        <view class="num-control">
+          <button class="minus" catchtap="reduceCart" data-id="{{item.id}}">-</button>
+          <text class="num">{{item.num}}</text>
+          <button class="plus" catchtap="addCart" data-item="{{item}}">+</button>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="popup-bottom">
+      <text>合计：<text class="total-money">¥{{totalPrice}}</text></text>
+      <button class="popup-submit" catchtap="submitOrder">去结算</button>
+    </view>
+  </view>
+</view>

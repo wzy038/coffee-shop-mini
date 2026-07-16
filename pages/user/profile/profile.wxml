@@ -1,0 +1,77 @@
+<view class="page">
+  <view class="header-card" style="height: 218rpx; display: flex; box-sizing: border-box">
+    <view class="avatar-wrap">
+      <image wx:if="{{user.avatar}}" src="{{user.avatar}}" class="avatar-img"></image>
+      <text wx:else class="avatar-icon">👤</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{user.nickName}}</text>
+      <text class="user-desc">咖啡鲜果茶轻食用户</text>
+    </view>
+    <view class="edit-btn" bindtap="editProfile">编辑</view>
+  </view>
+
+  <view class="info-list">
+    <view class="info-item">
+      <text class="info-label">会员编号</text>
+      <text class="info-value">{{user.memberId || '88888888'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">手机号</text>
+      <text class="info-value">{{user.phone || '未绑定'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">注册时间</text>
+      <text class="info-value">{{user.registerTime || '2024-01-01'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">会员等级</text>
+      <text class="info-value">{{user.level || '普通会员'}}</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">当前余额</text>
+      <text class="info-value highlight">{{user.balance || 0}}元</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">可用积分</text>
+      <text class="info-value highlight">{{user.integral || 0}}分</text>
+    </view>
+    <view class="info-item">
+      <text class="info-label">优惠券</text>
+      <text class="info-value">{{user.couponCount || 0}}张</text>
+    </view>
+  </view>
+
+  <view wx:if="{{showEdit}}" class="edit-mask" bindtap="hideEditModal" catchtouchmove="true">
+    <view class="edit-modal" catchtap="stopPropagation">
+      <view class="modal-header">
+        <text class="modal-title">编辑资料</text>
+        <text class="modal-close" bindtap="hideEditModal">×</text>
+      </view>
+      <view class="modal-body">
+        <view class="form-item avatar-item">
+          <text class="form-label">头像</text>
+          <view class="avatar-upload" bindtap="chooseAvatar">
+            <image wx:if="{{editForm.avatar}}" src="{{editForm.avatar}}" class="avatar-preview"></image>
+            <view wx:else class="avatar-placeholder">
+              <text class="upload-icon">📷</text>
+              <text class="upload-text">点击上传</text>
+            </view>
+          </view>
+        </view>
+        <view class="form-item">
+          <text class="form-label">昵称</text>
+          <input class="form-input" placeholder="请输入昵称" value="{{editForm.nickName}}" bindinput="inputNickName" />
+        </view>
+        <view class="form-item">
+          <text class="form-label">手机号</text>
+          <input class="form-input" placeholder="请输入手机号" value="{{editForm.phone}}" bindinput="inputPhone" />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="modal-cancel" bindtap="hideEditModal">取消</button>
+        <button class="modal-confirm" bindtap="saveProfile">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

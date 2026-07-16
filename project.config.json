@@ -1,0 +1,47 @@
+{
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "uglifyFileName": false,
+    "enhance": true,
+    "packNpmRelationList": [],
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useCompilerPlugins": false,
+    "minifyWXML": true,
+    "minifyWXSS": true,
+    "minifyJS": true,
+    "minified": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "preloadBackgroundData": false,
+    "minifyWXSS": true
+  },
+  "compileType": "miniprogram",
+  "simulatorPluginLibVersion": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "appid": "wxb6d4ab7307d8611a",
+  "editorSetting": {},
+  "libVersion": "3.16.1",
+  "proxy": {
+    "enable": true,
+    "rules": [
+      {
+        "description": "本地API代理",
+        "protocol": "http",
+        "host": "localhost",
+        "port": 80,
+        "path": "api/",
+        "query": ""
+      }
+    ]
+  }
+}

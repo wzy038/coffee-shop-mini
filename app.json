@@ -1,0 +1,90 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/around/around",
+    "pages/order/order",
+    "pages/mine/mine",
+    "pages/checkout/checkout"
+  ],
+  "subpackages": [
+    {
+      "root": "pages/goods",
+      "pages": [
+        "goods"
+      ]
+    },
+    {
+      "root": "pages/goods-data",
+      "pages": [
+        "goods-data"
+      ]
+    },
+    {
+      "root": "pages/takeaway",
+      "pages": [
+        "takeaway"
+      ]
+    },
+    {
+      "root": "pages/goods-detail",
+      "pages": [
+        "goods-detail"
+      ]
+    },
+    
+    {
+      "root": "pages/user",
+      "pages": [
+        "coupon/coupon",
+        "recharge/recharge",
+        "integral/integral",
+        "point/point",
+        "profile/profile",
+        "address/address"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "Cocount",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于获取配送地址"
+    }
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#d48b47",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/icon/home.png",
+        "selectedIconPath": "static/icon/home_selected.png"
+      },
+      {
+        "pagePath": "pages/around/around",
+        "text": "周边",
+        "iconPath": "static/icon/around.png",
+        "selectedIconPath": "static/icon/around_selected.png"
+      },
+      {
+        "pagePath": "pages/order/order",
+        "text": "订单",
+        "iconPath": "static/icon/order.png",
+        "selectedIconPath": "static/icon/order_selected.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "static/icon/mine.png",
+        "selectedIconPath": "static/icon/mine_selected.png"
+      }
+    ]
+  }
+}

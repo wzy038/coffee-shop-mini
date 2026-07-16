@@ -1,0 +1,61 @@
+<view class="page">
+  <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+  <view class="nav-bar">
+    <text class="nav-title">周边商品</text>
+  </view>
+  <swiper class="banner-swiper" indicator-dots autoplay circular interval="4000">
+    <swiper-item wx:for="{{bannerList}}" wx:key="id">
+      <image class="banner-img" src="{{item.image}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="goods-section">
+    <view class="section-title">周边商品</view>
+    <view class="goods-list">
+      <view class="goods-item" wx:for="{{goodsList}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <view class="goods-price">
+            <text class="price-symbol">¥</text>
+            <text class="price-value">{{item.price}}</text>
+          </view>
+          <view class="goods-point">
+            <text class="point-label">积分</text>
+            <text class="point-value">{{item.point}}</text>
+          </view>
+          <view class="goods-actions">
+            <view class="action-btn buy-btn" bindtap="buyGoods" data-item="{{item}}">购买</view>
+            <view class="action-btn exchange-btn" bindtap="exchangeGoods" data-item="{{item}}">积分兑换</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="pay-modal" wx:if="{{showPayModal}}" bindtap="closePayModal">
+    <view class="pay-content" catchtap="stopPropagation">
+      <view class="pay-header">
+        <text class="pay-title">选择支付方式</text>
+        <text class="pay-close" bindtap="closePayModal">×</text>
+      </view>
+      <view class="pay-body">
+        <view class="pay-item" bindtap="selectPayType" data-type="balance">
+        
+          <text class="pay-name">余额支付</text>
+          <text class="pay-balance">当前余额：¥{{userBalance}}</text>
+          <text class="pay-check">{{payType === 'balance' ? '✓' : ''}}</text>
+        </view>
+        <view class="pay-item" bindtap="selectPayType" data-type="wechat">
+         
+          <text class="pay-name">微信支付</text>
+          <text class="pay-check">{{payType === 'wechat' ? '✓' : ''}}</text>
+        </view>
+      </view>
+      <view class="pay-footer">
+        <view class="pay-amount">支付金额：¥{{currentGoods.price}}</view>
+        <button class="pay-submit" bindtap="confirmPay">确认支付</button>
+      </view>
+    </view>
+  </view>
+</view>

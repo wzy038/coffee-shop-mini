@@ -1,0 +1,191 @@
+<view class="mine">
+  <image class="bg-image" src="/pages/mine/static/images/backgroud.png" mode="aspectFill"></image>
+  <view class="bg-overlay"></view>
+  <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+  <view class="nav-bar" style="height: 88rpx; display: flex; box-sizing: border-box">
+    <text class="nav-title">我的</text>
+  </view>
+  
+  <view class="bg-section"Z style="height: 404rpx; display: block; box-sizing: border-box">
+    <view class="user-header">
+      <view class="avatar-wrap">
+        <image wx:if="{{user && user.avatar}}" src="{{user.avatar}}" class="avatar-img"></image>
+        <text wx:else class="avatar-icon">👤</text>
+      </view>
+      <view class="user-info">
+        <text class="user-name">{{user ? user.nickName : 'Cocount Coffee'}}</text>
+        <text class="user-desc">{{user ? '咖啡鲜果茶轻食用户' : '欢迎加入Cocount Coffee | 咖啡鲜果茶轻食'}}</text>
+      </view>
+    </view>
+    <view class="info-box" style="height: 130rpx; display: flex; box-sizing: border-box">
+      <view class="info-text">
+        <text class="info-title">{{(user && user.nickName) || 'Cocount Coffee'}} | 咖啡鲜果茶轻食</text>
+        <text class="info-sub">咖啡鲜果茶多轻食</text>
+        <text wx:if="{{!user || !user.nickName}}" class="info-tip">登录后解锁更多专属特权</text>
+      </view>
+      <view wx:if="{{!user || !user.nickName}}" class="info-login-btn" bindtap="showLoginModal">注册/登录</view>
+    </view>
+  </view>
+
+  <view class="stats-card" style="height: 132rpx; display: flex; box-sizing: border-box">
+    <view class="stat-item" bindtap="goToRecharge">
+      <text class="stat-value">{{user ? user.balance : '*'}}</text>
+      <text class="stat-label">余额</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToCoupon">
+      <text class="stat-value">{{user ? user.couponCount : '*'}}</text>
+      <text class="stat-label">优惠券</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goToIntegral">
+      <text class="stat-value">{{user ? user.integral : '*'}}</text>
+      <text class="stat-label">积分</text>
+    </view>
+  </view>
+
+  <view class="menu-list">
+    <view class="menu-item" bindtap="goToOrders">
+      <text class="menu-text">订单中心</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToProfile">
+      <text class="menu-text">个人信息</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToService">
+      <text class="menu-text">客服中心</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToAddress">
+      <text class="menu-text">我的地址</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToRecharge">
+      <text class="menu-text">会员储值</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToIntegral">
+      <text class="menu-text">积分商城</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view wx:if="{{user && user.nickName}}" class="menu-item" bindtap="logout">
+      <text class="menu-text">退出登录</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <view wx:if="{{showLogin}}" class="login-page" catchtouchmove="true">
+    <view class="login-bg"></view>
+    
+    <view class="login-content">
+      <view class="pet-icon">
+        <view class="pet-placeholder"><text>🐱</text></view>
+      </view>
+      <text class="login-title">欢迎来到Cocount</text>
+      
+      <view class="login-buttons">
+        <button class="login-btn wechat-btn" bindtap="showWechatAccounts">
+          <text class="btn-icon">💚</text>
+          <text class="btn-text">微信登录</text>
+        </button>
+        <button class="login-btn phone-btn" bindtap="showPhoneLogin">
+          <text class="btn-icon">📱</text>
+          <text class="btn-text">手机号登录</text>
+        </button>
+      </view>
+      
+      <view class="agreement-box">
+        <view class="checkbox-wrap" bindtap="toggleAgreement">
+          <view class="checkbox {{agreed ? 'checked' : ''}}">
+            <text wx:if="{{agreed}}" class="check-icon">✓</text>
+          </view>
+        </view>
+        <text class="agreement-text">我已阅读并同意Cocount</text>
+        <text class="agreement-link">《用户协议》</text>
+        <text class="agreement-text">和</text>
+        <text class="agreement-link">《隐私政策》</text>
+      </view>
+    </view>
+    
+    <view class="paw-prints">
+      <view class="paw paw-1">🐾</view>
+      <view class="paw paw-2">🐾</view>
+      <view class="paw paw-3">🐾</view>
+      <view class="paw paw-4">🐾</view>
+    </view>
+  </view>
+
+  <view wx:if="{{showWechatAccount}}" class="wechat-account-mask" catchtouchmove="true">
+    <view class="wechat-account-modal">
+      <view class="account-header">
+        <text class="account-title">选择微信账号</text>
+        <text class="account-close" bindtap="hideWechatAccount">×</text>
+      </view>
+      <view class="account-list">
+        <view wx:if="{{currentWechatUser}}" class="account-item" bindtap="confirmWechatLogin">
+          <image class="account-avatar" src="{{currentWechatUser.avatarUrl}}" mode="aspectFill"></image>
+          <view class="account-info">
+            <text class="account-name">{{currentWechatUser.nickName}}</text>
+            <text class="account-desc">当前已登录账号</text>
+          </view>
+          <view class="account-check">
+            <text class="check-icon">✓</text>
+          </view>
+        </view>
+        <view wx:else class="account-item loading">
+          <view class="loading-avatar">
+            <text>👤</text>
+          </view>
+          <view class="account-info">
+            <text class="account-name">加载中...</text>
+            <text class="account-desc">正在获取微信账号信息</text>
+          </view>
+        </view>
+      </view>
+      <view class="account-footer">
+        <view class="switch-account" bindtap="switchWechatAccount">
+          <text class="switch-text">切换账号</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showPhoneLoginModal}}" class="phone-login-mask" catchtouchmove="true">
+    <view class="phone-login-modal">
+      <view class="phone-modal-header">
+        <text class="phone-modal-title">{{isRegister ? '注册' : '手机号登录'}}</text>
+        <text class="phone-modal-close" bindtap="hidePhoneLoginModal">×</text>
+      </view>
+      <view class="phone-modal-body">
+        <view class="input-group">
+          <text class="input-icon">📱</text>
+          <input class="phone-input" placeholder="请输入手机号" type="text" value="{{phone}}" bindinput="onPhoneInput"></input>
+        </view>
+        <view class="input-group">
+          <text class="input-icon">🔒</text>
+          <input class="phone-input" placeholder="请输入密码" type="password" value="{{password}}" bindinput="onPasswordInput"></input>
+        </view>
+        <view wx:if="{{isRegister}}" class="input-group">
+          <text class="input-icon">🔒</text>
+          <input class="phone-input" placeholder="请确认密码" type="password" value="{{confirmPassword}}" bindinput="onConfirmPasswordInput"></input>
+        </view>
+        <view wx:if="{{isRegister}}" class="input-group">
+          <text class="input-icon">👤</text>
+          <input class="phone-input" placeholder="请输入昵称（选填）" value="{{nickName}}" bindinput="onNickNameInput"></input>
+        </view>
+        <button class="phone-submit-btn" bindtap="submitPhoneAuth">
+          <text>{{isRegister ? '注册' : '登录'}}</text>
+        </button>
+        <view class="close-btn-wrap">
+          <text class="close-btn" bindtap="hidePhoneLoginModal">关闭</text>
+        </view>
+      </view>
+      <view class="phone-modal-footer">
+        <text class="switch-auth" bindtap="toggleAuthMode">
+          {{isRegister ? '已有账号？去登录' : '还没注册？立即注册'}}
+        </text>
+      </view>
+    </view>
+  </view>
+</view>

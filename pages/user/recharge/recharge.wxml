@@ -1,0 +1,123 @@
+<view class="page">
+  <view class="balance-header">
+    <view class="header-bg"></view>
+    <view class="balance-content">
+      <view class="balance-info">
+        <text class="balance-label">当前余额</text>
+        <text class="balance-value">¥{{balance}}</text>
+      </view>
+      <view class="balance-row">
+        <view class="balance-col">
+          <text class="col-value">¥{{availableBalance}}</text>
+          <text class="col-label">可用余额</text>
+        </view>
+        <view class="col-divider"></view>
+        <view class="balance-col">
+          <text class="col-value">¥{{frozenBalance}}</text>
+          <text class="col-label">冻结余额</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="main-content">
+    <view class="btn-group">
+      <view class="recharge-btn" bindtap="showRechargeModal">
+        
+        <text class="btn-text">立即充值</text>
+      </view>
+      <view class="detail-btn" bindtap="showDetail">
+        
+        <text class="btn-text">余额明细</text>
+      </view>
+    </view>
+
+    <view class="section">
+      <text class="section-title">💎 充值优惠</text>
+      <view class="option-list">
+        <view class="option-card" bindtap="selectOption" data-amount="20" data-gift="0">
+          <view class="option-top">
+            <text class="option-price">¥20</text>
+            <text class="option-tag">基础</text>
+          </view>
+          <text class="option-desc">无赠送</text>
+        </view>
+        <view class="option-card highlight" bindtap="selectOption" data-amount="50" data-gift="5">
+          <view class="option-top">
+            <text class="option-price">¥50</text>
+            <text class="option-tag highlight-tag">推荐</text>
+          </view>
+          <text class="option-gift">赠送¥5</text>
+          <text class="option-desc">实际到账¥55</text>
+        </view>
+        <view class="option-card" bindtap="selectOption" data-amount="100" data-gift="15">
+          <view class="option-top">
+            <text class="option-price">¥100</text>
+            <text class="option-tag">超值</text>
+          </view>
+          <text class="option-gift">赠送¥15</text>
+          <text class="option-desc">实际到账¥115</text>
+        </view>
+        <view class="option-card" bindtap="selectOption" data-amount="200" data-gift="40">
+          <view class="option-top">
+            <text class="option-price">¥200</text>
+            <text class="option-tag">尊享</text>
+          </view>
+          <text class="option-gift">赠送¥40</text>
+          <text class="option-desc">实际到账¥240</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <text class="section-title">📝 温馨提示</text>
+      <view class="tips-box">
+        <text class="tip-item">• 充值金额将即时到账，可用于消费抵扣</text>
+        <text class="tip-item">• 赠送金额仅限本店消费使用</text>
+        <text class="tip-item">• 余额长期有效，不设使用期限</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showModal}}" class="modal-overlay" bindtap="hideRechargeModal">
+    <view class="modal-content" catchtap="preventClose">
+      <text class="modal-title">充值金额</text>
+      <view class="input-box">
+        <text class="input-prefix">¥</text>
+        <input class="money-input" type="digit" placeholder="请输入充值金额" bindinput="inputMoney" value="{{money}}" />
+      </view>
+      <view class="quick-amounts">
+        <text wx:for="{{quickAmounts}}" wx:key="*this" class="quick-tag" bindtap="selectAmount" data-amount="{{item}}">{{item}}元</text>
+      </view>
+      <view class="modal-btns">
+        <view class="modal-cancel" bindtap="hideRechargeModal">取消</view>
+        <view class="modal-confirm" bindtap="confirmRecharge">确认充值</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showDetailModal}}" class="modal-overlay" bindtap="hideDetailModal">
+    <view class="detail-modal" catchtap="preventClose">
+      <text class="modal-title">余额明细</text>
+      <scroll-view class="detail-scroll" scroll-y>
+        <view wx:if="{{balanceRecords.length > 0}}" class="record-list">
+          <view wx:for="{{balanceRecords}}" wx:key="id" class="record-item">
+            <view class="record-icon">{{item.type === 'income' ? '+' : '-'}}</view>
+            <view class="record-info">
+              <text class="record-type">{{item.typeName}}</text>
+              <text class="record-time">{{item.time}}</text>
+            </view>
+            <text class="record-amount {{item.type === 'income' ? 'income' : 'expense'}}">
+              {{item.type === 'income' ? '+' : '-'}}¥{{item.amount}}
+            </text>
+          </view>
+        </view>
+        <view wx:else class="empty-state">
+          <text class="empty-icon">📝</text>
+          <text class="empty-text">暂无余额变动记录</text>
+        </view>
+      </scroll-view>
+      <view class="modal-close-btn" bindtap="hideDetailModal">关闭</view>
+    </view>
+  </view>
+</view>

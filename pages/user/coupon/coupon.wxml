@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="top-bar">
+    <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
+    <view class="nav-bar">
+      <text class="nav-back" bindtap="goBack">‹</text>
+      <text class="nav-title">优惠券</text>
+      <view class="nav-right"></view>
+    </view>
+    
+    <view class="tabs">
+      <view class="tab-item {{currentTab === 'unused' ? 'active' : ''}}" bindtap="switchTab" data-tab="unused">未使用</view>
+      <view class="tab-item {{currentTab === 'used' ? 'active' : ''}}" bindtap="switchTab" data-tab="used">已使用</view>
+    </view>
+  </view>
+
+  <view class="goods-section">
+    <view class="section-title">{{currentTab === 'unused' ? '未使用优惠券' : '已使用优惠券'}}</view>
+    
+    <view class="goods-grid" wx:if="{{currentTab === 'unused'}}">
+      <view class="goods-item" wx:for="{{unusedCoupons}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-point">{{item.point}}积分兑换</text>
+          <text class="goods-non-stackable">不可叠加使用</text>
+        </view>
+        <view class="goods-btn" bindtap="goToGoods" data-item="{{item}}">立即使用</view>
+      </view>
+    </view>
+
+    <view class="goods-grid" wx:if="{{currentTab === 'used'}}">
+      <view class="goods-item used" wx:for="{{usedCoupons}}" wx:key="id">
+        <image class="goods-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <text class="goods-name">{{item.name}}</text>
+          <text class="goods-point">{{item.point}}积分兑换</text>
+          <text class="goods-used">已使用</text>
+        </view>
+        <view class="goods-btn disabled">已使用</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{(currentTab === 'unused' && unusedCoupons.length === 0) || (currentTab === 'used' && usedCoupons.length === 0)}}" class="empty-state">
+    <text class="empty-icon">🎫</text>
+    <text class="empty-text">{{currentTab === 'unused' ? '暂无未使用优惠券' : '暂无已使用优惠券'}}</text>
+    <text class="empty-hint" wx:if="{{currentTab === 'unused'}}">去积分商城兑换吧~</text>
+    <view class="empty-btn" wx:if="{{currentTab === 'unused'}}" bindtap="goToIntegral">去兑换</view>
+  </view>
+</view>

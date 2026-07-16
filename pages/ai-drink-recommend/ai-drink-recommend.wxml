@@ -1,0 +1,68 @@
+<view class="container">
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <text class="header-title">AI饮品推荐</text>
+    <view class="header-placeholder"></view>
+  </view>
+
+  <scroll-view class="chat-container" scroll-y="true" scroll-into-view="{{scrollToId}}" enhanced show-scrollbar="false">
+    <view class="message-list">
+      <view class="ai-message">
+        <view class="ai-avatar">
+          <text class="avatar-icon">☕</text>
+        </view>
+        <view class="ai-bubble">
+          <text class="bubble-text">你好！我是你的AI咖啡助手，请问有什么可以帮你的？比如"我最近在减肥"或者"推荐一款提神的饮品"~</text>
+        </view>
+      </view>
+
+      <block wx:for="{{messages}}" wx:key="id">
+        <view wx:if="{{item.type === 'user'}}" class="user-message" id="msg-{{item.id}}">
+          <view class="user-bubble">
+            <text class="bubble-text">{{item.content}}</text>
+            <view wx:if="{{item.cartItems && item.cartItems.length > 0}}" class="cart-preview">
+              <view wx:for="{{item.cartItems}}" wx:key="product_id" wx:for-item="cartItem" class="cart-item">
+                <text class="cart-item-name">{{cartItem.name}}</text>
+                <text class="cart-item-price">¥{{cartItem.price}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view wx:else class="ai-message" id="msg-{{item.id}}">
+          <view class="ai-avatar">
+            <text class="avatar-icon">☕</text>
+          </view>
+          <view class="ai-bubble">
+            <text class="bubble-text">{{item.content}}</text>
+            <view wx:if="{{item.recommendations && item.recommendations.length > 0}}" class="recommendation-list">
+              <view wx:for="{{item.recommendations}}" wx:key="product_id" wx:for-item="rec" class="recommendation-card">
+                <view class="rec-info">
+                  <text class="rec-name">{{rec.name}}</text>
+                  <text class="rec-price">¥{{rec.price}}</text>
+                  <text class="rec-reason">{{rec.reason}}</text>
+                  <view class="rec-tags">
+                    <text class="tag">甜度: {{rec.sweetness || '适中'}}</text>
+                    <text class="tag">冰度: {{rec.ice_level || '少冰'}}</text>
+                  </view>
+                </view>
+                <view wx:if="{{rec.discount}}" class="rec-discount">
+                  <text class="discount-text">立省 ¥{{rec.discount}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <view class="input-area">
+    <input class="input-box" placeholder="输入你的需求..." value="{{inputValue}}" bindinput="onInput" bindconfirm="sendMessage" />
+    <view class="send-btn" bindtap="sendMessage">
+      <text class="send-text">发送</text>
+    </view>
+  </view>
+</view>

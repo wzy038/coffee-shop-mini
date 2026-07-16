@@ -1,0 +1,10 @@
+<view class="float-ball" 
+      style="left: {{ballLeft}}px; top: {{ballTop}}px;"
+      catchtouchstart="onTouchStart"
+      catchtouchmove="onTouchMove"
+      catchtouchend="onTouchEnd">
+  <view class="ball-content">
+    <text class="ai-text">AI</text>
+    <text class="custom-text">定制</text>
+  </view>
+</view>

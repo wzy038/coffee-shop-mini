@@ -223,6 +223,103 @@ def _generate_recommendation(product, matched_tags, user_text, all_products, pai
     }
 
 
+def _get_recommend_data(user_text):
+    """
+    核心推荐逻辑，抽取为独立函数供多个路由复用
+    """
+    tags = DrinkTag.query.filter_by(is_active=True).all()
+
+    if not tags:
+        return success_response(data={
+            "recommendations": [],
+            "message": "暂无标签数据，请先在后台配置饮品标签",
+        }, message="success")
+
+    matched = _match_tags(user_text, tags)
+
+    if not matched:
+        fallback_products = Product.query.filter_by(is_on_sale=True).order_by(Product.sales.desc()).limit(3).all()
+        if fallback_products:
+            recommendations = []
+            for product in fallback_products:
+                rec = _generate_recommendation(product, [], user_text, [], None)
+                recommendations.append({
+                    "product": product.to_dict(),
+                    "sweetness": rec["sweetness"],
+                    "ice": rec["ice"],
+                    "reason": rec["reason"],
+                    "recommendText": f"虽然没有完全匹配，但这款{product.name}很受欢迎，值得一试！",
+                    "matchedTags": [],
+                    "score": 0,
+                })
+            return success_response(data={
+                "recommendations": recommendations,
+                "message": f"没有找到完全匹配的，但为你推荐几款热门饮品",
+            }, message="success")
+        else:
+            return success_response(data={
+                "recommendations": [],
+                "message": f"没有找到匹配「{user_text}」的饮品，试试其他关键词吧～",
+            }, message="success")
+
+    all_products = Product.query.filter_by(is_on_sale=True).all()
+    used_pids = set()
+
+    recommendations = []
+    for item in matched[:5]:
+        product = item["product"]
+        if product.id in used_pids:
+            continue
+
+        pairing_product = _find_pairing(product, all_products, used_pids)
+
+        rec = _generate_recommendation(product, item["matched_tags"], user_text, all_products, pairing_product)
+        recommendations.append({
+            "product": product.to_dict(),
+            "sweetness": rec["sweetness"],
+            "ice": rec["ice"],
+            "reason": rec["reason"],
+            "recommendText": rec["recommendText"],
+            "matchedTags": rec["matchedTags"],
+            "pairing": rec["pairing"],
+            "score": item["score"],
+        })
+
+        used_pids.add(product.id)
+        if pairing_product:
+            used_pids.add(pairing_product.id)
+
+    return success_response(data={
+        "recommendations": recommendations,
+        "message": f"为你找到{len(recommendations)}款匹配饮品",
+    }, message="success")
+
+
+@ai_bp.route("/recommend", methods=["POST"])
+def recommend():
+    """
+    AI 饮品推荐接口（兼容小程序调用）
+    请求体：{ message: "用户输入的口味需求", cart_items?: [] }
+    返回：匹配的饮品推荐列表
+    """
+    try:
+        data = request.get_json(silent=True) or {}
+        user_text = (data.get("message") or data.get("user_input") or data.get("text") or "").strip()
+
+        if not user_text:
+            return success_response(data={
+                "recommendations": [],
+                "message": "请告诉我你的口味需求，比如「清爽、低因、少糖」",
+            }, message="success")
+
+        logger.info(f"AI饮品推荐请求(兼容接口): text={user_text}")
+        return _get_recommend_data(user_text)
+
+    except Exception as e:
+        logger.error(f"AI饮品推荐异常(兼容接口): {e}", exc_info=True)
+        return error_response(message="推荐服务暂时不可用，请稍后再试", code=500)
+
+
 @ai_bp.route("/drink-suggest", methods=["POST"])
 def drink_suggest():
     """
@@ -239,7 +336,7 @@ def drink_suggest():
     """
     try:
         data = request.get_json(silent=True) or {}
-        user_text = (data.get("text") or "").strip()
+        user_text = (data.get("text") or data.get("message") or data.get("user_input") or "").strip()
 
         if not user_text:
             return success_response(data={
@@ -248,73 +345,7 @@ def drink_suggest():
             }, message="success")
 
         logger.info(f"AI饮品推荐请求: text={user_text}")
-
-        tags = DrinkTag.query.filter_by(is_active=True).all()
-
-        if not tags:
-            return success_response(data={
-                "recommendations": [],
-                "message": "暂无标签数据，请先在后台配置饮品标签",
-            }, message="success")
-
-        matched = _match_tags(user_text, tags)
-
-        if not matched:
-            fallback_products = Product.query.filter_by(is_on_sale=True).order_by(Product.sales.desc()).limit(3).all()
-            if fallback_products:
-                recommendations = []
-                for product in fallback_products:
-                    rec = _generate_recommendation(product, [], user_text, [], None)
-                    recommendations.append({
-                        "product": product.to_dict(),
-                        "sweetness": rec["sweetness"],
-                        "ice": rec["ice"],
-                        "reason": rec["reason"],
-                        "recommendText": f"虽然没有完全匹配，但这款{product.name}很受欢迎，值得一试！",
-                        "matchedTags": [],
-                        "score": 0,
-                    })
-                return success_response(data={
-                    "recommendations": recommendations,
-                    "message": f"没有找到完全匹配的，但为你推荐几款热门饮品",
-                }, message="success")
-            else:
-                return success_response(data={
-                    "recommendations": [],
-                    "message": f"没有找到匹配「{user_text}」的饮品，试试其他关键词吧～",
-                }, message="success")
-
-        all_products = Product.query.filter_by(is_on_sale=True).all()
-        used_pids = set()
-
-        recommendations = []
-        for item in matched[:5]:
-            product = item["product"]
-            if product.id in used_pids:
-                continue
-
-            pairing_product = _find_pairing(product, all_products, used_pids)
-
-            rec = _generate_recommendation(product, item["matched_tags"], user_text, all_products, pairing_product)
-            recommendations.append({
-                "product": product.to_dict(),
-                "sweetness": rec["sweetness"],
-                "ice": rec["ice"],
-                "reason": rec["reason"],
-                "recommendText": rec["recommendText"],
-                "matchedTags": rec["matchedTags"],
-                "pairing": rec["pairing"],
-                "score": item["score"],
-            })
-
-            used_pids.add(product.id)
-            if pairing_product:
-                used_pids.add(pairing_product.id)
-
-        return success_response(data={
-            "recommendations": recommendations,
-            "message": f"为你找到{len(recommendations)}款匹配饮品",
-        }, message="success")
+        return _get_recommend_data(user_text)
 
     except Exception as e:
         logger.error(f"AI饮品推荐异常: {e}", exc_info=True)

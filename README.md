@@ -109,7 +109,7 @@ coffee-mini/
 │   └── 项目演示.mp4        # 全功能操作演示录屏
 ├── README.md               # 项目说明文档
 ├── API.md                  # API接口文档
-├── prompt_log.md           # Prompt日志
+├── prompt_shturl.md        # Prompt日志
 ├── 实训总结报告.md          # 个人实训总结报告
 ├── app.js                  # 小程序入口
 ├── app.json                # 小程序配置
@@ -171,7 +171,7 @@ python run.py
 
 ### Flask AI推荐接口
 后端服务位于 `server/` 目录，包含：
-- `/api/ai/recommend` - AI智能饮品推荐接口
+- `/api/recommend` - AI智能饮品推荐接口
 - `/api/products` - 商品列表接口
 - `/api/categories` - 分类列表接口
 - `/api/orders` - 订单管理接口
@@ -179,7 +179,7 @@ python run.py
 
 ### 接口文档与测试
 完整接口定义、请求示例、异常返回、测试指引独立存放于仓库根目录 `API.md`
-所有接口Postman调试截图存放路径：`/screenshot/postman/`
+接口完整测试示例、成功/异常返回样例全部记录于根目录`API.md`标准化接口文档，本次以规范文档替代Postman测试截图，可结合本地演示录屏完整验证接口运行效果；`/screenshot/postman/`为预留空目录。
 
 ## 部署
 
@@ -228,16 +228,17 @@ python run.py
 ## 实训考核配套材料清单
 
 ### Prompt日志
-- 存放路径：`prompt_log.md`
+- 存放路径：`prompt_shturl.md`
 - 记录AI辅助开发过程中的关键Prompt和交互对话
 
 ### AI代码审查截图
 - 存放路径：`/screenshot/ai/`
 - 包含AI辅助代码审查、代码优化建议的截图
 
-### 接口测试截图
-- 存放路径：`/screenshot/postman/`
-- 包含所有API接口的Postman测试截图
+### 接口测试说明
+- 接口完整测试示例、成功/异常返回样例全部记录于根目录`API.md`标准化接口文档
+- 本次以规范文档替代Postman测试截图，可结合本地演示录屏完整验证接口运行效果
+- `/screenshot/postman/`为预留空目录
 
 ### 演示视频
 - 存放路径：`/video/项目演示.mp4`

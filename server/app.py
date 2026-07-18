@@ -3,7 +3,7 @@ Flask 主应用入口
 负责创建 Flask 应用实例、加载配置、初始化扩展、注册蓝图、配置错误处理和种子数据初始化
 """
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 from config import get_config
@@ -107,6 +107,38 @@ def register_root_routes(app):
             "message": "success",
             "data": {"status": "ok"},
         })
+
+    @app.route("/api/recommend", methods=["POST"])
+    def api_recommend():
+        """
+        AI饮品推荐接口（API文档标准路径）
+        请求体：{ user_input: "用户输入的口味需求" }
+        返回：匹配的饮品推荐列表
+        """
+        from routes.ai import _get_recommend_data
+        import logging
+        logger = logging.getLogger(__name__)
+        try:
+            data = request.get_json(silent=True) or {}
+            user_text = (data.get("user_input") or data.get("message") or data.get("text") or "").strip()
+
+            if not user_text:
+                return jsonify({
+                    "code": 400,
+                    "message": "用户输入不能为空",
+                    "data": None
+                })
+
+            logger.info(f"AI饮品推荐请求(API标准接口): text={user_text}")
+            return _get_recommend_data(user_text)
+
+        except Exception as e:
+            logger.error(f"AI饮品推荐异常(API标准接口): {e}", exc_info=True)
+            return jsonify({
+                "code": 500,
+                "message": "服务器内部错误",
+                "data": None
+            })
 
 
 def init_db():

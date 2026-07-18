@@ -326,9 +326,6 @@ curl -X POST "http://localhost/coffee-mini/api/order.php?action=create" \
 
 ## 四、接口测试说明
 
-### Postman测试截图
-所有接口Postman调用成功截图存放在仓库 `/screenshot/postman/` 目录下。
-
 ### Flask后端访问地址
 - **本地开发地址**: `http://127.0.0.1:5000`
 - **局域网访问地址**: `http://[你的局域网IP]:5000`

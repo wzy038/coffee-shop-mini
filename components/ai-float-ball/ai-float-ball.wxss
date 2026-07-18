@@ -1,0 +1,24 @@
+.ai-float-ball {
+  position: fixed;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8B4513 0%, #A0522D 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(139, 69, 19, 0.4);
+  z-index: 9999;
+  transition: left 0.2s ease-out, top 0.2s ease-out;
+}
+
+.ball-text {
+  font-size: 18rpx;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ai-float-ball:active {
+  transform: scale(0.95);
+}

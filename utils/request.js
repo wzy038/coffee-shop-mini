@@ -1,31 +1,43 @@
-// ===== wx.request 请求已禁用，纯前端模式 =====
-// const baseUrl = "http://localhost:8080"
+const isProduction = false
 
-// function request(url, data = {}, method = "GET") {
-//   return new Promise((resolve, reject) => {
-//     wx.request({
-//       url: baseUrl + url,
-//       data: data,
-//       method: method,
-//       header: {
-//         "Content-Type": "application/x-www-form-urlencoded"
-//       },
-//       success(res) {
-//         if (res.data.code === 200) {
-//           resolve(res.data)
-//         } else {
-//           wx.showToast({ title: res.data.msg, icon: "none" })
-//           reject(res.data)
-//         }
-//       },
-//       fail() {
-//         wx.showToast({ title: "接口请求超时", icon: "none" })
-//         reject()
-//       }
-//     })
-//   })
-// }
+const baseUrl = isProduction 
+  ? "https://coffee-mini-api.onrender.com" 
+  : "http://192.168.1.100:5000"
 
-module.exports = {
-  // request // 已禁用
+function request(url, data = {}, method = "GET") {
+  return new Promise((resolve, reject) => {
+    wx.request({
+      url: baseUrl + url,
+      data: data,
+      method: method,
+      header: {
+        "Content-Type": "application/json"
+      },
+      timeout: 10000,
+      success(res) {
+        if (res.statusCode === 200) {
+          if (res.data.code === 200) {
+            resolve(res.data)
+          } else {
+            wx.showToast({ title: res.data.message || "请求失败", icon: "none" })
+            reject(res.data)
+          }
+        } else {
+          wx.showToast({ title: `HTTP错误: ${res.statusCode}`, icon: "none" })
+          reject(res)
+        }
+      },
+      fail(err) {
+        wx.showToast({ title: "网络连接失败，请检查网络", icon: "none" })
+        reject(err)
+      }
+    })
+  })
 }
+
+request.get = (url, data) => request(url, data, "GET")
+request.post = (url, data) => request(url, data, "POST")
+request.put = (url, data) => request(url, data, "PUT")
+request.delete = (url, data) => request(url, data, "DELETE")
+
+module.exports = request

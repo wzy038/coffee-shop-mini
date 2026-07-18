@@ -3,14 +3,19 @@
     "pages/index/index",
     "pages/around/around",
     "pages/order/order",
-    "pages/mine/mine",
-    "pages/checkout/checkout"
+    "pages/mine/mine"
   ],
   "subpackages": [
     {
       "root": "pages/goods",
       "pages": [
         "goods"
+      ]
+    },
+    {
+      "root": "pages/checkout",
+      "pages": [
+        "checkout"
       ]
     },
     {

@@ -15,20 +15,44 @@
     "minifyWXML": true,
     "minifyWXSS": true,
     "minifyJS": true,
-    "minified": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
     "lazyloadPlaceholderEnable": false,
     "preloadBackgroundData": false,
-    "minifyWXSS": true
+    "compileWorklet": false,
+    "packNpmManually": false,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "componentEnableInterpreter": true,
+    "lazyCodeLoading": "requiredComponents"
   },
   "compileType": "miniprogram",
   "simulatorPluginLibVersion": {},
   "packOptions": {
-    "ignore": [],
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "server"
+      },
+      {
+        "type": "folder",
+        "value": ".venv"
+      },
+      {
+        "type": "folder",
+        "value": "screenshot"
+      },
+      {
+        "type": "folder",
+        "value": ".git"
+      }
+    ],
     "include": []
   },
-  "appid": "wxb6d4ab7307d8611a",
+  "appid": "wx39261368150bcef2",
   "editorSetting": {},
   "libVersion": "3.16.1",
   "proxy": {

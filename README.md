@@ -92,7 +92,6 @@ coffee-mini/
 │   ├── mine/               # 我的
 │   ├── checkout/           # 结算
 │   ├── goods/              # 商品列表(分包)
-│   ├── goods-data/         # 商品数据(分包)
 │   ├── goods-detail/       # 商品详情(分包)
 │   ├── takeaway/           # 外卖点餐(分包)
 │   ├── user/               # 用户模块(分包)

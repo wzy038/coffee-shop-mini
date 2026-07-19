@@ -19,12 +19,6 @@
       ]
     },
     {
-      "root": "pages/goods-data",
-      "pages": [
-        "goods-data"
-      ]
-    },
-    {
       "root": "pages/takeaway",
       "pages": [
         "takeaway"

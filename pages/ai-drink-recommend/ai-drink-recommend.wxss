@@ -3,71 +3,79 @@
   flex-direction: column;
   height: 100vh;
   background-color: #f8f5f2;
+  padding: 0 !important;
+  margin: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .chat-container {
   flex: 1;
-  padding: 20rpx;
+  padding: 0 16rpx;
+  padding-top: 8rpx;
   overflow-y: auto;
+  margin-top: 0;
 }
 
 .message-list {
   display: flex;
   flex-direction: column;
+  margin-top: 0;
+  padding-top: 0;
 }
 
 .user-message {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
 }
 
 .user-bubble {
   max-width: 70%;
   background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%);
-  border-radius: 24rpx 24rpx 8rpx 24rpx;
-  padding: 20rpx;
+  border-radius: 20rpx 20rpx 6rpx 20rpx;
+  padding: 16rpx;
   box-shadow: 0 4rpx 12rpx rgba(255, 165, 0, 0.2);
 }
 
 .ai-message {
   display: flex;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
 }
 
 .ai-avatar {
-  width: 64rpx;
-  height: 64rpx;
+  width: 56rpx;
+  height: 56rpx;
   border-radius: 50%;
   background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 16rpx;
+  margin-right: 12rpx;
   flex-shrink: 0;
 }
 
 .avatar-icon {
-  font-size: 28rpx;
+  font-size: 24rpx;
 }
 
 .ai-bubble {
   max-width: 75%;
   background-color: #FFFFFF;
-  border-radius: 24rpx 24rpx 24rpx 8rpx;
-  padding: 20rpx;
+  border-radius: 20rpx 20rpx 20rpx 6rpx;
+  padding: 16rpx;
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
 }
 
 .bubble-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #333333;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .cart-preview {
-  margin-top: 16rpx;
-  padding-top: 16rpx;
+  margin-top: 12rpx;
+  padding-top: 12rpx;
   border-top: 1rpx solid rgba(255, 255, 255, 0.3);
 }
 
@@ -75,39 +83,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8rpx 0;
+  padding: 6rpx 0;
 }
 
 .cart-item-name {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #FFFFFF;
 }
 
 .cart-item-price {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #FFFFFF;
   font-weight: bold;
 }
 
 .recommendation-list {
-  margin-top: 16rpx;
+  margin-top: 12rpx;
 }
 
 .recommendation-card {
   background-color: #FFF8F0;
-  border-radius: 16rpx;
-  padding: 16rpx;
-  margin-bottom: 12rpx;
+  border-radius: 12rpx;
+  padding: 12rpx;
+  margin-bottom: 8rpx;
   border: 1rpx solid #FFE4C4;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .rec-image {
-  width: 120rpx;
-  height: 120rpx;
-  border-radius: 12rpx;
-  margin-right: 16rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 10rpx;
+  margin-right: 12rpx;
   flex-shrink: 0;
   background-color: #FFE4C4;
 }
@@ -120,60 +128,60 @@
 }
 
 .rec-name {
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: bold;
   color: #8B4513;
 }
 
 .rec-price {
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-weight: bold;
   color: #D2691E;
-  margin: 8rpx 0;
+  margin: 4rpx 0;
 }
 
 .rec-reason {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #666666;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
 .rec-tags {
   display: flex;
-  gap: 12rpx;
-  margin-top: 12rpx;
+  gap: 8rpx;
+  margin-top: 6rpx;
 }
 
 .tag {
-  font-size: 20rpx;
+  font-size: 18rpx;
   color: #D2691E;
   background-color: #FFE4C4;
-  padding: 4rpx 12rpx;
-  border-radius: 8rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 6rpx;
 }
 
 .rec-add-btn {
-  margin-top: 12rpx;
+  margin-top: 8rpx;
 }
 
 .add-btn-text {
-  font-size: 22rpx;
+  font-size: 20rpx;
   color: #FFFFFF;
   background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-  padding: 8rpx 20rpx;
-  border-radius: 20rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 16rpx;
 }
 
 .rec-discount {
   background: linear-gradient(135deg, #FF6347 0%, #FF4500 100%);
-  border-radius: 8rpx;
-  padding: 8rpx 16rpx;
-  margin-top: 12rpx;
+  border-radius: 6rpx;
+  padding: 6rpx 12rpx;
+  margin-top: 8rpx;
   text-align: center;
 }
 
 .discount-text {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #FFFFFF;
   font-weight: bold;
 }
@@ -185,8 +193,8 @@
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 12rpx 30rpx;
-  padding-bottom: calc(12rpx + env(safe-area-inset-bottom));
+  padding: 10rpx 24rpx;
+  padding-bottom: calc(10rpx + env(safe-area-inset-bottom));
   background-color: #FFFFFF;
   border-top: 1rpx solid #EEEEEE;
   box-sizing: border-box;
@@ -194,26 +202,26 @@
 
 .input-box {
   flex: 1;
-  height: 76rpx;
+  height: 70rpx;
   background-color: #F5F5F5;
-  border-radius: 38rpx;
-  padding: 0 28rpx;
-  font-size: 28rpx;
-  margin-right: 16rpx;
+  border-radius: 35rpx;
+  padding: 0 24rpx;
+  font-size: 26rpx;
+  margin-right: 12rpx;
 }
 
 .send-btn {
-  width: 110rpx;
-  height: 76rpx;
+  width: 100rpx;
+  height: 70rpx;
   background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
-  border-radius: 38rpx;
+  border-radius: 35rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .send-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #FFFFFF;
   font-weight: bold;
 }

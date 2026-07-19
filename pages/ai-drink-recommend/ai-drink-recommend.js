@@ -4,9 +4,10 @@ Page({
   data: {
     messages: [],
     inputValue: '',
-    scrollToId: '',
-    cartData: []
+    cartData: [],
+    scrollTop: 0
   },
+  scrollViewId: null,
 
   onLoad: function(options) {
     if (options.cart) {
@@ -53,11 +54,11 @@ Page({
     const newMessages = [...this.data.messages, userMessage]
     this.setData({
       messages: newMessages,
-      inputValue: '',
-      scrollToId: `msg-${userMessage.id}`
+      inputValue: ''
     })
 
     this.saveMessages()
+    this.scrollToBottom()
     this.requestAIRecommend(inputValue)
   },
 
@@ -115,11 +116,11 @@ Page({
 
     const newMessages = [...this.data.messages, aiMessage]
     this.setData({
-      messages: newMessages,
-      scrollToId: `msg-${aiMessage.id}`
+      messages: newMessages
     })
 
     this.saveMessages()
+    this.scrollToBottom()
   },
 
   showErrorResponse: function(message) {
@@ -132,11 +133,23 @@ Page({
 
     const newMessages = [...this.data.messages, aiMessage]
     this.setData({
-      messages: newMessages,
-      scrollToId: `msg-${aiMessage.id}`
+      messages: newMessages
     })
 
     this.saveMessages()
+    this.scrollToBottom()
+  },
+
+  scrollToBottom: function() {
+    setTimeout(() => {
+      wx.createSelectorQuery().select('.message-list').boundingClientRect((rect) => {
+        if (rect) {
+          this.setData({
+            scrollTop: rect.height
+          })
+        }
+      }).exec()
+    }, 100)
   },
 
   saveMessages: function() {

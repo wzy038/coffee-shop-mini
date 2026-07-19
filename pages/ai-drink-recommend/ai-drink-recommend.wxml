@@ -1,6 +1,6 @@
-﻿<view class="container">
+<view class="container">
 
-  <scroll-view class="chat-container" scroll-y="true" scroll-into-view="{{scrollToId}}" enhanced show-scrollbar="false">
+  <scroll-view class="chat-container" scroll-y="true" scroll-top="{{scrollTop}}" style="height: 1066rpx; display: block; box-sizing: border-box">
     <view class="message-list">
       <view class="ai-message">
         <view class="ai-avatar">
@@ -12,7 +12,7 @@
       </view>
 
       <block wx:for="{{messages}}" wx:key="id">
-        <view wx:if="{{item.type === 'user'}}" class="user-message" id="msg-{{item.id}}">
+        <view wx:if="{{item.type === 'user'}}" class="user-message" id="msg-{{item.id}}" style="height: 76rpx; display: flex; box-sizing: border-box">
           <view class="user-bubble">
             <text class="bubble-text">{{item.content}}</text>
             <view wx:if="{{item.cartItems && item.cartItems.length > 0}}" class="cart-preview">
@@ -56,7 +56,7 @@
     </view>
   </scroll-view>
 
-  <view class="input-area">
+  <view class="input-area" style="height: 192rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 1256rpx">
     <input class="input-box" placeholder="输入你的需求..." value="{{inputValue}}" bindinput="onInput" bindconfirm="sendMessage" />
     <view class="send-btn" bindtap="sendMessage">
       <text class="send-text">发送</text>

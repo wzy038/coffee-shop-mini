@@ -2,11 +2,11 @@
   <image class="bg-image" src="/pages/mine/static/images/backgroud.png" mode="aspectFill"></image>
   <view class="bg-overlay"></view>
   <view class="status-bar-placeholder" style="height: {{statusBarHeight}}px"></view>
-  <view class="nav-bar" style="height: 88rpx; display: flex; box-sizing: border-box">
+  <view class="nav-bar">
     <text class="nav-title">我的</text>
   </view>
   
-  <view class="bg-section"Z style="height: 404rpx; display: block; box-sizing: border-box">
+  <view class="user-section">
     <view class="user-header">
       <view class="avatar-wrap">
         <image wx:if="{{user && user.avatar}}" src="{{user.avatar}}" class="avatar-img"></image>
@@ -14,33 +14,26 @@
       </view>
       <view class="user-info">
         <text class="user-name">{{user ? user.nickName : 'Cocount Coffee'}}</text>
-        <text class="user-desc">{{user ? '咖啡鲜果茶轻食用户' : '欢迎加入Cocount Coffee | 咖啡鲜果茶轻食'}}</text>
+        <text class="user-desc">{{user ? '咖啡鲜果茶轻食用户' : '欢迎加入Cocount Coffee'}}</text>
       </view>
+      <view wx:if="{{!user || !user.nickName}}" class="login-btn" bindtap="showLoginModal">注册/登录</view>
     </view>
-    <view class="info-box" style="height: 130rpx; display: flex; box-sizing: border-box">
-      <view class="info-text">
-        <text class="info-title">{{(user && user.nickName) || 'Cocount Coffee'}} | 咖啡鲜果茶轻食</text>
-        <text class="info-sub">咖啡鲜果茶多轻食</text>
-        <text wx:if="{{!user || !user.nickName}}" class="info-tip">登录后解锁更多专属特权</text>
+    
+    <view class="stats-card">
+      <view class="stat-item" bindtap="goToRecharge">
+        <text class="stat-value">{{user ? user.balance : '*'}}</text>
+        <text class="stat-label">余额</text>
       </view>
-      <view wx:if="{{!user || !user.nickName}}" class="info-login-btn" bindtap="showLoginModal">注册/登录</view>
-    </view>
-  </view>
-
-  <view class="stats-card" style="height: 132rpx; display: flex; box-sizing: border-box">
-    <view class="stat-item" bindtap="goToRecharge">
-      <text class="stat-value">{{user ? user.balance : '*'}}</text>
-      <text class="stat-label">余额</text>
-    </view>
-    <view class="stat-divider"></view>
-    <view class="stat-item" bindtap="goToCoupon">
-      <text class="stat-value">{{user ? user.couponCount : '*'}}</text>
-      <text class="stat-label">优惠券</text>
-    </view>
-    <view class="stat-divider"></view>
-    <view class="stat-item" bindtap="goToIntegral">
-      <text class="stat-value">{{user ? user.integral : '*'}}</text>
-      <text class="stat-label">积分</text>
+      <view class="stat-divider"></view>
+      <view class="stat-item" bindtap="goToCoupon">
+        <text class="stat-value">{{user ? user.couponCount : '*'}}</text>
+        <text class="stat-label">优惠券</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item" bindtap="goToIntegral">
+        <text class="stat-value">{{user ? user.integral : '*'}}</text>
+        <text class="stat-label">积分</text>
+      </view>
     </view>
   </view>
 
@@ -69,7 +62,7 @@
       <text class="menu-text">积分商城</text>
       <text class="menu-arrow">></text>
     </view>
-    <view wx:if="{{user && user.nickName}}" class="menu-item" bindtap="logout">
+    <view wx:if="{{user && user.nickName}}" class="menu-item logout-item" bindtap="logout">
       <text class="menu-text">退出登录</text>
       <text class="menu-arrow">></text>
     </view>

@@ -7,7 +7,7 @@ Page({
         id: 101,
         name: '羽衣甘蓝华夫饼',
         point: 160,
-        image: '/static/images/c1.png',
+        image: '/pages/goods/static/images/c1.png',
         goodsId: 1,
         goodsPrice: 16
       },
@@ -15,7 +15,7 @@ Page({
         id: 102,
         name: '黑芝麻酸奶杯',
         point: 180,
-        image: '/static/images/c2.png',
+        image: '/pages/goods/static/images/c2.png',
         goodsId: 2,
         goodsPrice: 18
       },
@@ -23,7 +23,7 @@ Page({
         id: 103,
         name: '黑金冰酪三明治',
         point: 40,
-        image: '/static/images/c3.png',
+        image: '/pages/goods/static/images/c3.png',
         goodsId: 3,
         goodsPrice: 4
       }

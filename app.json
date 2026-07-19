@@ -54,6 +54,9 @@
     "navigationBarTitleText": "Cocount",
     "navigationBarTextStyle": "black"
   },
+  "lazyCodeLoad": {
+    "component": true
+  },
   "permission": {
     "scope.userLocation": {
       "desc": "您的位置信息将用于获取配送地址"

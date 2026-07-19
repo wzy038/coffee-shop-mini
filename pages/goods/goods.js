@@ -12,9 +12,9 @@ Page({
     searchText: '',
     searchResult: [],
     recommendList: [
-      { id:1, name:"南瓜西米拿铁", sales:88, price:24, img:"/pages/goods/static/images/l2.png" },
-      { id:2, name:"抹茶美式", sales:88, price:25, img:"/pages/goods/static/images/m6.png" },
-      { id:3, name:"桂圆红枣拿铁", sales:88, price:22, img:"/pages/goods/static/images/l4.png" }
+      { id:1, name:"南瓜西米拿铁", sales:88, price:24, img:"/static/images/m4 (13).png" },
+      { id:2, name:"抹茶美式", sales:88, price:25, img:"/static/images/m4 (3).png" },
+      { id:3, name:"桂圆红枣拿铁", sales:88, price:22, img:"/static/images/m4 (15).png" }
     ],
     cateList: [
       { id:1, name:"吃杯美式" },
@@ -31,21 +31,21 @@ Page({
     ],
     goodsData: [
       [
-        { id:1, name:"蓝色深海美式", sales:53, price:16, img:"/pages/goods/static/images/m1.png" },
-        { id:2, name:"青柠冰美式", sales:124, price:18, img:"/pages/goods/static/images/m2.png" },
-        { id:3, name:"冰淇淋美式", sales:6, price:14, img:"/pages/goods/static/images/m3.png" },
-        { id:4, name:"玫瑰美式", sales:88, price:20, img:"/pages/goods/static/images/m4.png" },
-        { id:5, name:"西瓜美式", sales:88, price:28, img:"/pages/goods/static/images/m5.png" },
-        { id:6, name:"抹茶美式", sales:88, price:25, img:"/pages/goods/static/images/m6.png" },
-        { id:7, name:"话梅冰美式", sales:88, price:22, img:"/pages/goods/static/images/m7.png" }
+        { id:1, name:"蓝色深海美式", sales:53, price:16, img:"/static/images/m4 (18).png" },
+        { id:2, name:"青柠冰美式", sales:124, price:18, img:"/static/images/m4 (19).png" },
+        { id:3, name:"冰淇淋美式", sales:6, price:14, img:"/static/images/m4 (7).png" },
+        { id:4, name:"玫瑰美式", sales:88, price:20, img:"/static/images/m4 (2).png" },
+        { id:5, name:"西瓜美式", sales:88, price:28, img:"/static/images/m4 (1).png" },
+        { id:6, name:"抹茶美式", sales:88, price:25, img:"/static/images/m4 (3).png" },
+        { id:7, name:"话梅冰美式", sales:88, price:22, img:"/static/images/m4 (4).png" }
       ],
       [
-        { id:1, name:"红豆奶油拿铁", sales:88, price:22, img:"/pages/goods/static/images/l1.png" },
-        { id:2, name:"南瓜西米拿铁", sales:88, price:24, img:"/pages/goods/static/images/l2.png" },
-        { id:3, name:"黑芝麻糊拿铁", sales:88, price:18, img:"/pages/goods/static/images/l3.png" },
-        { id:4, name:"桂圆红枣拿铁", sales:88, price:22, img:"/pages/goods/static/images/l4.png" },
-        { id:5, name:"柑橘可可拿铁", sales:88, price:23, img:"/pages/goods/static/images/l5.png" },
-        { id:6, name:"奶盖丸子厚乳拿铁", sales:88, price:22, img:"/pages/goods/static/images/l6.png" }
+        { id:1, name:"红豆奶油拿铁", sales:88, price:22, img:"/static/images/m4 (12).png" },
+        { id:2, name:"南瓜西米拿铁", sales:88, price:24, img:"/static/images/m4 (13).png" },
+        { id:3, name:"黑芝麻糊拿铁", sales:88, price:18, img:"/static/images/m4 (13).png" },
+        { id:4, name:"桂圆红枣拿铁", sales:88, price:22, img:"/static/images/m4 (15).png" },
+        { id:5, name:"柑橘可可拿铁", sales:88, price:23, img:"/static/images/m4 (16).png" },
+        { id:6, name:"奶盖丸子厚乳拿铁", sales:88, price:22, img:"/static/images/m4 (17).png" }
       ],
       [
         { id:1, name:"桂花拿铁", sales:88, price:17, img:"/static/images/w1.png" },
@@ -56,12 +56,12 @@ Page({
         { id:6, name:"咸摩卡冰拿铁", sales:88, price:22, img:"/static/images/w6.png" }
       ],
       [ 
-        { id:1, name:"橙C美式", sales:88, price:17, img:"/pages/goods/static/images/q1.png" },
-        { id:2, name:"凤梨美式", sales:88, price:25, img:"/pages/goods/static/images/q2.png" },
-        { id:3, name:"冰淇淋美式", sales:88, price:20, img:"/pages/goods/static/images/q3.png" },
-        { id:4, name:"西瓜美式", sales:88, price:28, img:"/pages/goods/static/images/q4.png" },
-        { id:5, name:"玫瑰美式", sales:88, price:25, img:"/static/images/q5.png" },
-        { id:6, name:"抹茶美式", sales:88, price:22, img:"/static/images/q6.png" }
+        { id:1, name:"橙C美式", sales:88, price:17, img:"/static/images/m4 (5).png" },
+        { id:2, name:"凤梨美式", sales:88, price:25, img:"/static/images/m4 (6).png" },
+        { id:3, name:"冰淇淋美式", sales:88, price:20, img:"/static/images/m4 (7).png" },
+        { id:4, name:"西瓜美式", sales:88, price:28, img:"/static/images/m4 (1).png" },
+        { id:5, name:"玫瑰美式", sales:88, price:25, img:"/static/images/m4 (2).png" },
+        { id:6, name:"抹茶美式", sales:88, price:22, img:"/static/images/m4 (3).png" }
       ],
       [
         { id:1, name:"橙芭乐椰子冷萃", sales:88, price:17, img:"/static/images/a1.png" },

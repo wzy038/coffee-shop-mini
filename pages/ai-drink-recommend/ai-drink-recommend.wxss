@@ -187,9 +187,6 @@
 }
 
 .input-area {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   display: flex;
   align-items: center;
@@ -198,6 +195,7 @@
   background-color: #FFFFFF;
   border-top: 1rpx solid #EEEEEE;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .input-box {

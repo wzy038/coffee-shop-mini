@@ -25,6 +25,7 @@ Page({
       this.setData({
         messages: savedMessages
       })
+      this.scrollToBottom()
     }
   },
 

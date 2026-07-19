@@ -1,6 +1,6 @@
 <view class="container">
 
-  <scroll-view class="chat-container" scroll-y="true" scroll-top="{{scrollTop}}">
+  <scroll-view class="chat-container" scroll-y="true" scroll-top="{{scrollTop}}" style="height: 1066rpx; display: block; box-sizing: border-box">
     <view class="message-list">
       <view class="ai-message">
         <view class="ai-avatar">

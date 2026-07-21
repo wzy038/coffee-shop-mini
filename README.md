@@ -254,7 +254,9 @@ python run.py
 文件大小20.8MB，使用Git LFS托管，GitHub网页端无法在线预览。
 查看方式：
 1. 将仓库克隆至本地后直接双击播放；
-2. 进入video文件页点击【View raw】单独下载视频。
+2. 进入video文件页点击【View raw】单独下载视频；
+3. 百度网盘备份：链接: `https://pan.baidu.com/s/1EtnEYvppp9mqwq64Sk48Lw?pwd=m2ta` 提取码: m2ta（防止GitHub视频无法下载）。
+
 录屏内容：Flask后端启动、小程序首页/商品下单/AI饮品推荐全流程演示。
 
 ### 个人实训报告

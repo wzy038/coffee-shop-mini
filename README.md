@@ -258,6 +258,9 @@ python run.py
 3. 百度网盘备份：链接: `https://pan.baidu.com/s/1EtnEYvppp9mqwq64Sk48Lw?pwd=m2ta` 提取码: m2ta（防止GitHub视频无法下载）。
 
 录屏内容：Flask后端启动、小程序首页/商品下单/AI饮品推荐全流程演示。
+或
+通过网盘分享的文件：咖啡店线上点单项目
+链接: https://pan.baidu.com/s/1EtnEYvppp9mqwq64Sk48Lw?pwd=m2ta 提取码: m2ta
 
 ### 个人实训报告
 - 存放路径：`实训总结报告.md`
